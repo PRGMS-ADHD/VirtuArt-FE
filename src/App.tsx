@@ -1,9 +1,21 @@
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import Layout from './components/common/Layout';
+import Gallery from './pages/Gallery';
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: (
+      <Layout>
+        <Gallery />
+      </Layout>
+    ),
+    children: [{ path: '/', element: <Gallery /> }],
+  },
+]);
+
 function App() {
-  return (
-    <div>
-      <h1>React App</h1>
-    </div>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
