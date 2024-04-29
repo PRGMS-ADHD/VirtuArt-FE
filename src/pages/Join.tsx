@@ -15,7 +15,7 @@ type FormValues = {
 
 const schema = z
   .object({
-    email: z.string().email('Invalid email'),
+    email: z.string().min(1, 'Email is required').email('Invalid email'),
     nickname: z.string().min(1, 'Nickname is required'),
     password: z
       .string()
@@ -107,7 +107,7 @@ function Join() {
           <Button text="JOIN" type="submit" />
           <div className="ml-auto mr-1 mt-2 flex justify-center font-helvetica text-xs">
             <p className="mr-5 text-gray-400">Already have an account?</p>
-            <Link to="/login" className="text-customGray2">
+            <Link to="/signup" className="text-customGray2">
               LOGIN
             </Link>
           </div>
