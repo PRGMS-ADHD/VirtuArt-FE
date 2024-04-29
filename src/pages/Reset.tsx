@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 import Title from '../components/common/Title';
 import Input from '../components/common/Input';
 import Button from '../components/common/Button';
@@ -10,22 +10,26 @@ type FormValues = {
   email: string;
   currentPassword: string;
   password: string;
-  passwordConfirm?: string | null | undefined;
+  passwordConfirm: string;
 };
 
-const schema = yup.object().shape({
-  email: yup.string().required('Email is required').email('Invalid email'),
-  currentPassword: yup.string().required('Current password is required'),
-  password: yup
-    .string()
-    .required('Password is required')
-    .min(8, 'Need 8 characters')
-    .matches(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/, 'Need letter & number'),
-  passwordConfirm: yup
-    .string()
-    .oneOf([yup.ref('password'), undefined], 'Passwords must match')
-    .nullable(),
-});
+const schema = z
+  .object({
+    email: z.string().email('Invalid email'),
+    currentPassword: z.string().min(1, 'password is required'),
+    password: z
+      .string()
+      .min(8, 'Need 8 characters')
+      .regex(
+        /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
+        'Need 1 letter & 1 number',
+      ),
+    passwordConfirm: z.string(),
+  })
+  .refine((data) => data.password === data.passwordConfirm, {
+    message: 'Passwords must match',
+    path: ['passwordConfirm'],
+  });
 
 function Join() {
   const {
@@ -33,7 +37,7 @@ function Join() {
     handleSubmit,
     formState: { errors },
   } = useForm<FormValues>({
-    resolver: yupResolver(schema),
+    resolver: zodResolver(schema),
   });
 
   const onSubmit = (data: FormValues) => {
@@ -65,7 +69,7 @@ function Join() {
             id="currentPassword"
             type="password"
             label="CURRENT PASSWORD"
-            register={register('password')}
+            register={register('currentPassword')}
           />
           <p
             className={`text-sm ${errors.currentPassword ? 'text-red-500' : 'text-transparent'} ml-1 mt-1 font-helvetica text-[10.5px] font-light`}
