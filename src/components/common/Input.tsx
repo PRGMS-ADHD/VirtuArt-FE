@@ -20,7 +20,10 @@ const Input: FC<InputProps> = ({ type, label, id, register }) => {
       <input
         id={id}
         type={type}
-        {...register}
+        ref={register.ref}
+        onChange={register.onChange}
+        onBlur={register.onBlur}
+        name={register.name}
         className="h-[50px] w-[400px] flex-shrink-0 rounded-md border border-gray-700 bg-inputBg pl-5 font-[Helvetica] text-base font-normal leading-normal text-black opacity-100"
       />
     </div>
