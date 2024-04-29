@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
 import Title from '../components/common/Title';
 import Input from '../components/common/Input';
 import Button from '../components/common/Button';
@@ -12,13 +12,12 @@ type FormData = {
 };
 
 // Define validation schema
-const schema = yup.object().shape({
-  email: yup.string().required(),
-  password: yup
+const schema = z.object({
+  email: z.string().email('Email is required'),
+  password: z
     .string()
-    .required('Password is required')
     .min(8, 'Password must be at least 8 characters')
-    .matches(
+    .regex(
       /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
       'Need 1 letter & 1 number',
     ),
@@ -30,7 +29,7 @@ function Login() {
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({
-    resolver: yupResolver(schema),
+    resolver: zodResolver(schema),
   });
 
   // submit 확인
@@ -87,7 +86,7 @@ function Login() {
             <p className="mr-5 font-helvetica text-customGray4">
               Don&#39;t have an account?
             </p>
-            <Link to="/join" className="font-helvetica text-customGray2">
+            <Link to="/signup" className="font-helvetica text-customGray2">
               SIGN UP
             </Link>
           </div>
