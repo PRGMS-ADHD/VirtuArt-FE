@@ -13,7 +13,13 @@ function Header() {
         </div>
       </div>
       <div className="flex flex-1 justify-center">
-        <img src="/src/assets/logo.png" alt="logo" width="90" height="90" />
+        <img
+          src="/src/assets/favicon.png"
+          alt="logo"
+          width="90"
+          height="90"
+          className="min-w-[90px]"
+        />
       </div>
       <div className="flex flex-1 justify-center">
         <NavLinks />
