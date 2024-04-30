@@ -1,4 +1,5 @@
 import ArtpieceList from '../components/gallery/ArtpieceList';
+import Tags from '../components/gallery/Tags';
 
 const Gallery = () => {
   return (
@@ -15,6 +16,7 @@ const Gallery = () => {
       >
         캔버스 너머의 이야기를 들어보세요.
       </p>
+      <Tags />
       <ArtpieceList />
     </div>
   );

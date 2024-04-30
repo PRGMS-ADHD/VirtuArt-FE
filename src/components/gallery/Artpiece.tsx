@@ -42,7 +42,7 @@ const Artpiece: React.FC<ArtpieceProps> = ({ category }) => {
                 width={376}
                 height={211}
               />
-              <div className="absolute right-0 top-0 p-2">
+              <div className="absolute right-0 top-0 p-3 px-4">
                 <LikesButton />
               </div>
             </div>
