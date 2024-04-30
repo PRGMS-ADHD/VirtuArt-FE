@@ -20,6 +20,10 @@ export default {
       flexShrink: {
         10: '10',
       },
+      boxShadow: {
+        'custom-dark':
+          '0 4px 6px 0 rgba(0, 0, 0, 0.4), 0 5px 15px 0 rgba(0, 0, 0, 0.1)',
+      },
     },
   },
   plugins: [],
