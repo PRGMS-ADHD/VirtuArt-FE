@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 function NavLinks() {
   return (
     <nav>
-      <ul className="font-helvetica flex space-x-10 font-light">
+      <ul className="flex space-x-10 font-helvetica font-light">
         <li>
           <Link to="/gallery">GALLERY</Link>
         </li>
