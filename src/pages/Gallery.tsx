@@ -1,4 +1,4 @@
-import GalleryArtpiece from '../components/gallery/GalleryArtpiece';
+import ArtpieceList from '../components/gallery/ArtpieceList';
 
 const Gallery = () => {
   return (
@@ -15,7 +15,7 @@ const Gallery = () => {
       >
         캔버스 너머의 이야기를 들어보세요.
       </p>
-      <GalleryArtpiece />
+      <ArtpieceList />
     </div>
   );
 };

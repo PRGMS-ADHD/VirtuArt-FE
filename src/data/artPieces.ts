@@ -7,7 +7,7 @@ interface ArtPiece {
   category: string;
 }
 
-export const westernArtPieces: ArtPiece[] = [
+export const ArtPieces: ArtPiece[] = [
   {
     id: 1,
     title: 'Image1',
@@ -55,5 +55,37 @@ export const westernArtPieces: ArtPiece[] = [
     artist: 'Artist6',
     imageUrl: '/Western/Image6.png',
     category: '서양화',
+  },
+  {
+    id: 7,
+    title: 'Image7',
+    description: 'Description7',
+    artist: 'Artist7',
+    imageUrl: '/Orient/Image7.png',
+    category: '동양화',
+  },
+  {
+    id: 8,
+    title: 'Image8',
+    description: 'Description8',
+    artist: 'Artist8',
+    imageUrl: '/Orient/Image8.png',
+    category: '동양화',
+  },
+  {
+    id: 9,
+    title: 'Image9',
+    description: 'Description9',
+    artist: 'Artist9',
+    imageUrl: '/Orient/Image9.png',
+    category: '동양화',
+  },
+  {
+    id: 10,
+    title: 'Image10',
+    description: 'Description10',
+    artist: 'Artist10',
+    imageUrl: '/Orient/Image10.png',
+    category: '동양화',
   },
 ];
