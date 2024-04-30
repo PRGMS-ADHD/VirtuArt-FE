@@ -15,7 +15,7 @@ import logo from '../../assets/test1.png';
 //   onSettingsClick?: () => void;
 // }
 
-const ProfileCard: React.FC = () => {
+const UserProfileCard: React.FC = () => {
   return (
     <div className="relative flex h-[256px] w-[1196px] flex-col justify-end border border-transparent bg-transparent">
       <ProfilePicture
@@ -44,4 +44,4 @@ const ProfileCard: React.FC = () => {
   );
 };
 
-export default ProfileCard;
+export default UserProfileCard;
