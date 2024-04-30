@@ -3,13 +3,22 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Login from './pages/Login';
 import Reset from './pages/Reset';
 import Join from './pages/Join';
-import Layout from './components/common/layout/Layout';
+import Layout from './components/common/Layout';
 import Main from './pages/Main';
+import Gallery from './pages/Gallery';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <Main />,
+  },
+  {
+    path: '/gallery',
+    element: (
+      <Layout>
+        <Gallery />
+      </Layout>
+    ),
   },
   {
     element: <Layout />,
@@ -30,8 +39,8 @@ const router = createBrowserRouter([
   },
 ]);
 
-const App: React.FC = () => {
+function App() {
   return <RouterProvider router={router} />;
-};
+}
 
 export default App;
