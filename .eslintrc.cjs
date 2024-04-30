@@ -38,5 +38,6 @@ module.exports = {
     'no-param-reassign': ['error', { props: false }],
     'import/no-extraneous-dependencies': ['error', { devDependencies: false }],
     'react/function-component-definition': 'off',
+    "react/require-default-props": "off"
   },
 };
