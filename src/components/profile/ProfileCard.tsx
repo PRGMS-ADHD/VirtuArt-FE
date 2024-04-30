@@ -17,27 +17,28 @@ import logo from '../../assets/test1.png';
 
 const ProfileCard: React.FC = () => {
   return (
-    <div className="relative flex h-[364px] w-[1304px] items-center justify-center">
-      <div className="relative flex h-[256px] w-[1196px] flex-col justify-end border border-transparent">
-        <ProfilePicture src={logo} />
-        <div className="mt-6 flex items-center justify-between">
-          <div className="flex items-center">
-            <p className="ml-[80px] font-noto-sans-kr text-3xl font-normal leading-normal text-black">
-              정센트 반 희호
-            </p>
-            <p className="font-noto-sans-kr text-sm font-normal leading-normal text-black">
-              &nbsp;(Jeongcent Van Heeho)
-            </p>
-          </div>
-          <div className="flex gap-x-4">
-            <LikesButton />
-            <SettingsButton />
-          </div>
+    <div className="relative flex h-[256px] w-[1196px] flex-col justify-end border border-transparent bg-transparent">
+      <ProfilePicture
+        src={logo}
+        className="absolute left-[-54px] top-[-54px]"
+      />
+      <div className="mt-6 flex items-center justify-between">
+        <div className="flex items-center">
+          <p className="ml-[80px] font-noto-sans-kr text-3xl font-normal leading-normal text-black">
+            정센트 반 희호
+          </p>
+          <p className="font-noto-sans-kr text-sm font-normal leading-normal text-black">
+            &nbsp;(Jeongcent Van Heeho)
+          </p>
         </div>
-        <ProfileLinks />
-        <div className="flex flex-1 items-center justify-center">
-          <ProfileTextArea />
+        <div className="flex gap-x-4">
+          <LikesButton />
+          <SettingsButton />
         </div>
+      </div>
+      <ProfileLinks />
+      <div className="flex flex-1 items-center justify-center">
+        <ProfileTextArea />
       </div>
     </div>
   );
