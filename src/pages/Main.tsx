@@ -1,7 +1,9 @@
+import UserProfileCard from '../components/profile/UserProfileCard';
+
 function Main() {
   return (
-    <div>
-      <h1>Main</h1>
+    <div className="flex min-h-screen items-center justify-center">
+      <UserProfileCard />
     </div>
   );
 }

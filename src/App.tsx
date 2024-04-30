@@ -1,21 +1,23 @@
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Layout from './components/common/Layout';
 import Gallery from './pages/Gallery';
-
-const router = createBrowserRouter([
-  {
-    path: '/',
-    element: (
-      <Layout>
-        <Gallery />
-      </Layout>
-    ),
-    children: [{ path: '/', element: <Gallery /> }],
-  },
-]);
+import Login from './pages/Login';
+import Reset from './pages/Reset';
+import Join from './pages/Join';
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <Router>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<Gallery />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/reset" element={<Reset />} />
+          <Route path="/signup" element={<Join />} />
+        </Routes>
+      </Layout>
+    </Router>
+  );
 }
 
 export default App;
