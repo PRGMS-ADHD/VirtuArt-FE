@@ -2,7 +2,7 @@ import IconLink from './IconLink';
 
 function Footer() {
   return (
-    <div className="flex h-32 flex-col items-center border-t border-gray-300">
+    <div className="flex h-32 flex-col items-center border-t border-gray-300 w-full">
       <div className="mb-4 mt-11 flex space-x-5">
         <IconLink type="github" text=" GITHUB" to="https://github.com" />
         <IconLink
