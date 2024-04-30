@@ -20,7 +20,7 @@ function Header() {
           height="90"
           className="min-w-[90px]"
         />
-      </div>
+   Ω   </div>
       <div className="flex flex-1 justify-center">
         <NavLinks />
       </div>
