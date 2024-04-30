@@ -6,33 +6,24 @@ import {
   faYoutube,
 } from '@fortawesome/free-brands-svg-icons';
 import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
-import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
 
 interface IconLinkProps {
   type: string;
   text: string;
   to: string;
-  iconSize?: string;
 }
 
-const IconLink: React.FC<IconLinkProps> = ({
-  type,
-  text,
-  to,
-  iconSize = 'w-3 h-3',
-}) => {
+const IconLink: React.FC<IconLinkProps> = ({ type, text, to }) => {
   const renderIcon = () => {
     switch (type) {
       case 'github':
-        return <FontAwesomeIcon icon={faGithubAlt} className={iconSize} />;
+        return <FontAwesomeIcon icon={faGithubAlt} />;
       case 'youtube':
-        return <FontAwesomeIcon icon={faYoutube} className={iconSize} />;
+        return <FontAwesomeIcon icon={faYoutube} />;
       case 'instagram':
-        return <FontAwesomeIcon icon={faInstagram} className={iconSize} />;
+        return <FontAwesomeIcon icon={faInstagram} />;
       case 'contact':
-        return <FontAwesomeIcon icon={faEnvelope} className={iconSize} />;
-      case 'location':
-        return <FontAwesomeIcon icon={faLocationDot} className={iconSize} />;
+        return <FontAwesomeIcon icon={faEnvelope} />;
       default:
         return null;
     }
@@ -43,9 +34,10 @@ const IconLink: React.FC<IconLinkProps> = ({
       href={to}
       target="_blank"
       rel="noopener noreferrer"
-      className="font-noto-sans-kr text-[12px] font-light text-customGray3"
+      className="font-helvetica text-customGray3 text-[12px] font-light"
     >
-      {renderIcon()}&nbsp;{text}
+      {renderIcon()}
+      {text}
     </a>
   );
 };
