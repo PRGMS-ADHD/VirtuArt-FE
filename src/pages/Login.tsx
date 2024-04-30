@@ -38,7 +38,7 @@ function Login() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center">
+    <div className="flex h-full items-center justify-center">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col items-center space-y-6"
