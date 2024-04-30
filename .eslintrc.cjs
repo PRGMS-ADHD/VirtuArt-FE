@@ -36,7 +36,7 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'prettier/prettier': ['error'],
     'no-param-reassign': ['error', { props: false }],
-    'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+    'import/no-extraneous-dependencies': ['error', { devDependencies: false }],
     'react/function-component-definition': 'off',
     "react/require-default-props": "off"
   },
