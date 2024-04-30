@@ -45,7 +45,7 @@ function Join() {
   };
 
   return (
-    <div className="flex h-full items-center justify-center">
+    <div className="flex flex-1 items-center justify-center">
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col items-center space-y-6"
