@@ -1,4 +1,4 @@
-interface ArtPiece {
+export interface ArtPiece {
   id: number;
   title: string;
   description: string;
