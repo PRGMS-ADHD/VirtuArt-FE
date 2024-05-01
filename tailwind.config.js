@@ -56,6 +56,12 @@ export default {
       width: {
         1540: '1540px',
       },
+      borderWidth: {
+        1: '1px',
+      },
+      width: {
+        1540: '1540px',
+      },
     },
   },
   plugins: [require('@tailwindcss/aspect-ratio')],
