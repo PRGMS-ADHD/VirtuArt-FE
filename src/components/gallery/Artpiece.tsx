@@ -29,7 +29,7 @@ const Artpiece: React.FC<ArtpieceProps> = ({ category }) => {
 
   return (
     <div
-      className={`flex h-[300px] w-full items-center justify-center ${bgClass}`}
+      className={`relative flex w-full items-center justify-center ${bgClass}`}
     >
       <div className="grid grid-cols-4 gap-4">
         {categoryArtPieces
