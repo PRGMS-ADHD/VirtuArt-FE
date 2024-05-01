@@ -30,14 +30,13 @@ const LikesButton = () => {
                 className="absolute inset-0 flex items-center justify-center rounded-full bg-white bg-opacity-75"
               >
                 <IoMdHeart
-                  className="cursor-pointer text-lg text-red-500"
+                  className="cursor-pointer text-lg text-red-500 "
                   aria-label="Liked"
                 />
               </motion.div>
             ) : (
               <motion.div
                 key="unlike-icon"
-                initial={{ opacity: 0, scale: 0 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0 }}
                 transition={{ duration: 0.3 }}
