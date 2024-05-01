@@ -4,6 +4,7 @@ import Gallery from './pages/Gallery';
 import Login from './pages/Login';
 import Reset from './pages/Reset';
 import Join from './pages/Join';
+import MyPage from './pages/MyPage';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/reset" element={<Reset />} />
           <Route path="/signup" element={<Join />} />
+          <Route path="/mypage" element={<MyPage />} />
         </Routes>
       </Layout>
     </Router>
