@@ -4,6 +4,7 @@ import LikesButton from '../image/LikesButton';
 import { MdNavigateNext } from 'react-icons/md';
 import { ArtPieceCategory } from '../../data/artPieceCategories'; // 카테고리 데이터 임포트
 import ImageTooltip from './ImageTooltip';
+import { Link } from 'react-router-dom';
 
 interface ArtpieceProps {
   category: string;
@@ -11,6 +12,7 @@ interface ArtpieceProps {
 
 const Artpiece: React.FC<ArtpieceProps> = ({ category }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [selectedImageId, setSelectedImageId] = useState<string | null>(null);
   const [showTooltip, setShowTooltip] = useState(false);
   const [tooltipContent, setTooltipContent] = useState({
     title: '',
@@ -27,6 +29,10 @@ const Artpiece: React.FC<ArtpieceProps> = ({ category }) => {
     } else {
       setCurrentIndex(0);
     }
+  };
+
+  const handleImageClick = (id: number) => {
+    setSelectedImageId(id.toString());
   };
 
   const handleMouseEnter = (id: string, title: string, description: string) => {
@@ -63,12 +69,15 @@ const Artpiece: React.FC<ArtpieceProps> = ({ category }) => {
               }
               onMouseLeave={handleMouseLeave}
             >
-              <img
-                src={artpiece.imageUrl}
-                alt={artpiece.title}
-                width={376}
-                height={211}
-              />
+              <Link to={`/artpiece/${artpiece.id}`}>
+                <img
+                  src={artpiece.imageUrl}
+                  alt={artpiece.title}
+                  width={376}
+                  height={211}
+                  onClick={() => handleImageClick(artpiece.id)}
+                />
+              </Link>
               <div className="absolute right-0 top-0 p-3 px-4">
                 <LikesButton />
               </div>
