@@ -1,15 +1,13 @@
-import { ChevronDoubleDownIcon } from '@heroicons/react/20/solid';
 import React from 'react';
+import { ChevronDoubleDownIcon } from '@heroicons/react/20/solid';
 
 interface LoadMoreButtonProps {
   onClick: () => void;
-  style?: React.CSSProperties;
   isExpanded: boolean;
 }
 
 const LoadMoreButton: React.FC<LoadMoreButtonProps> = ({
   onClick,
-  style,
   isExpanded,
 }) => {
   const handleClick = () => {
@@ -20,21 +18,10 @@ const LoadMoreButton: React.FC<LoadMoreButtonProps> = ({
     <button
       type="button"
       onClick={handleClick}
-      style={{
-        width: '40px',
-        height: '36px',
-        borderRadius: '50%',
-        flexShrink: 0,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#fff',
-        border: '1px solid #DDD',
-        ...style,
-      }}
+      className="relative m-auto flex h-[36px] w-[40px] translate-y-1/2 items-center justify-center rounded-[50%] border border-customGray6 bg-white duration-300"
     >
       <ChevronDoubleDownIcon
-        className={`h-5 w-5 ${isExpanded ? 'rotate-180 transform' : ''}`}
+        className={`h-5 w-5 ${isExpanded ? 'rotate-180' : ''}`}
         fill="#777"
         strokeWidth={1}
       />
