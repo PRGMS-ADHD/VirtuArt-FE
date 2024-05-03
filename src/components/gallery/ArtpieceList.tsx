@@ -6,7 +6,12 @@ const ArtpieceList = () => {
     <div>
       {ArtPieceCategory.map((category) => (
         <div key={category.id}>
-          <h2>{category.name}</h2>
+          <div
+            className="mx-2  mt-10 text-sm"
+            style={{ fontFamily: 'noto-sans KR' }}
+          >
+            {category.name}
+          </div>
           <Artpiece category={category.name} />
         </div>
       ))}

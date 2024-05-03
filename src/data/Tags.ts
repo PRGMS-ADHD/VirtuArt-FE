@@ -56,10 +56,7 @@ export const Tags: Tag[] = [
     id: 13,
     name: '동양화',
   },
-  {
-    id: 14,
-    name: '미니멀리즘',
-  },
+
   {
     id: 15,
     name: '르네상스',
