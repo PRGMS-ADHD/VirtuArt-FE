@@ -26,8 +26,12 @@ const LikedSection: React.FC<LikedSectionProps> = ({
     >
       <div className="border-b border-customGray6">
         <div className="pt-8">
-          <p className="mb-1 ml-1 font-helveticaNeue">{title}</p>
-          <ImageGrid images={userImages} visibleCount={visibleCount} />
+          <p className="mb-1 ml-1 font-helveticaNeue text-xl">{title}</p>
+          <ImageGrid
+            images={userImages}
+            visibleCount={visibleCount}
+            columns={4}
+          />
         </div>
         <LoadMoreButton onClick={handleLoadMore} isExpanded={isExpanded} />
       </div>
