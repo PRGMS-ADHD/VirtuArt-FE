@@ -6,6 +6,7 @@ interface Artist {
 }
 
 export const Artists: Artist[] = [
+  // Existing entries
   {
     id: 1,
     name: '빈센트 반 고흐',
@@ -125,5 +126,127 @@ export const Artists: Artist[] = [
     name: '윌리엄 터너',
     imageUrl: '/Western/Artist4.png',
     category: '미디어 아트',
+  },
+
+  // New dummy data
+  {
+    id: 21,
+    name: '아티스트 1',
+    imageUrl: '/Western/Artist1.png',
+    category: '동양화',
+  },
+  {
+    id: 22,
+    name: '아티스트 2',
+    imageUrl: '/Western/Artist2.png',
+    category: '동양화',
+  },
+  {
+    id: 23,
+    name: '아티스트 3',
+    imageUrl: '/Western/Artist3.png',
+    category: '동양화',
+  },
+  {
+    id: 24,
+    name: '아티스트 4',
+    imageUrl: '/Western/Artist4.png',
+    category: '동양화',
+  },
+  {
+    id: 25,
+    name: '아티스트 5',
+    imageUrl: '/Western/Artist5.png',
+    category: '동양화',
+  },
+  {
+    id: 26,
+    name: '아티스트 6',
+    imageUrl: '/Western/Artist1.png',
+    category: '동양화',
+  },
+  {
+    id: 27,
+    name: '아티스트 7',
+    imageUrl: '/Western/Artist2.png',
+    category: '동양화',
+  },
+  {
+    id: 28,
+    name: '아티스트 8',
+    imageUrl: '/Western/Artist3.png',
+    category: '미디어 아트',
+  },
+  {
+    id: 29,
+    name: '아티스트 9',
+    imageUrl: '/Western/Artist4.png',
+    category: '미디어 아트',
+  },
+  {
+    id: 30,
+    name: '아티스트 10',
+    imageUrl: '/Western/Artist5.png',
+    category: '미디어 아트',
+  },
+  {
+    id: 31,
+    name: '아티스트 11',
+    imageUrl: '/Western/Artist1.png',
+    category: '미디어 아트',
+  },
+  {
+    id: 32,
+    name: '아티스트 12',
+    imageUrl: '/Western/Artist2.png',
+    category: '미디어 아트',
+  },
+  {
+    id: 33,
+    name: '아티스트 13',
+    imageUrl: '/Western/Artist3.png',
+    category: '미디어 아트',
+  },
+  {
+    id: 34,
+    name: '아티스트 14',
+    imageUrl: '/Western/Artist4.png',
+    category: '팝 아트',
+  },
+  {
+    id: 35,
+    name: '아티스트 15',
+    imageUrl: '/Western/Artist5.png',
+    category: '팝 아트',
+  },
+  {
+    id: 36,
+    name: '아티스트 16',
+    imageUrl: '/Western/Artist1.png',
+    category: '팝 아트',
+  },
+  {
+    id: 37,
+    name: '아티스트 17',
+    imageUrl: '/Western/Artist2.png',
+    category: '팝 아트',
+  },
+  {
+    id: 38,
+    name: '아티스트 18',
+    imageUrl: '/Western/Artist3.png',
+    category: '현대 미술',
+  },
+  {
+    id: 39,
+    name: '아티스트 19',
+    imageUrl: '/Western/Artist4.png',
+    category: '현대 미술',
+  },
+  {
+    id: 40,
+    name: '아티스트 20',
+    imageUrl: '/Western/Artist5.png',
+    category: '현대 미술',
   },
 ];
