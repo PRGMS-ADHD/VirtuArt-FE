@@ -9,6 +9,7 @@ const ArtWorks: React.FC = () => {
       fetchFunction={fetchArtists}
       errorImage={errorImage}
       className="bg-customGray5"
+      showLikesButton={false}
     />
   );
 };
