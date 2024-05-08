@@ -5,11 +5,8 @@ import { useForm } from 'react-hook-form';
 import Title from '../components/common/Title';
 import Input from '../components/common/Input';
 import Button from '../components/common/Button';
-
-type FormData = {
-  email: string;
-  password: string;
-};
+import useAuth from '../hooks/useAuth';
+import { LoginData } from '../models/user.model';
 
 // Define validation schema
 const schema = z.object({
@@ -28,13 +25,18 @@ function Login() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>({
+  } = useForm<LoginData>({
     resolver: zodResolver(schema),
   });
 
-  // submit 확인
-  const onSubmit = (data: FormData) => {
-    console.log(data);
+  const { userLogin } = useAuth();
+
+  const onSubmit = async (data: LoginData) => {
+    try {
+      await userLogin(data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
