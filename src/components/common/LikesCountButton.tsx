@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { IoMdHeart } from 'react-icons/io';
 import formatNumberToK from '@/utils/format';
 
-const LikesButton: React.FC = () => {
+const LikesCountButton: React.FC = () => {
   const [isLiked, setIsLiked] = useState(false);
 
   const handleClick = () => {
@@ -27,4 +27,4 @@ const LikesButton: React.FC = () => {
   );
 };
 
-export default LikesButton;
+export default LikesCountButton;
