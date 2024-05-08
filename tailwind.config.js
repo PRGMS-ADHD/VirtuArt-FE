@@ -26,6 +26,8 @@ export default {
       boxShadow: {
         'custom-dark':
           '0 4px 6px 0 rgba(0, 0, 0, 0.4), 0 5px 15px 0 rgba(0, 0, 0, 0.1)',
+        'custom-shadow': '0px 2px 4px 0px rgba(0, 0, 0, 0.25)',
+        'profile-shadow': '0px 4px 4px rgba(0, 0, 0, 0.25)',
       },
       borderWidth: {
         1: '1px',
@@ -33,7 +35,16 @@ export default {
       width: {
         1540: '1540px',
       },
+      strokeWidth: {
+        1: '1px',
+      },
+      stroke: {
+        custom: 'rgba(0, 0, 0, 0.11)',
+      },
+      filter: {
+        custom: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))',
+      },
     },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/aspect-ratio')],
 };
