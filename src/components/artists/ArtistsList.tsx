@@ -1,7 +1,7 @@
-import Artpiece from './Artpiece';
+import ArtistsInfo from './ArtistsInfo';
 import { ArtPieceCategory } from '../../data/artPieceCategories';
 
-const ArtpieceList = () => {
+const ArtistsList = () => {
   return (
     <div>
       {ArtPieceCategory.map((category) => (
@@ -12,11 +12,11 @@ const ArtpieceList = () => {
           >
             {category.name}
           </div>
-          <Artpiece category={category.name} />
+          <ArtistsInfo category={category.name} />
         </div>
       ))}
     </div>
   );
 };
 
-export default ArtpieceList;
+export default ArtistsList;
