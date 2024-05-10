@@ -54,7 +54,7 @@ const ArtPieceDetail = () => {
       </div>
 
       <div className="my-5 flex flex-col items-start justify-evenly gap-5 pb-6 xl:flex-row">
-        <div className="shadow-custom-shadow relative mx-0 flex h-[38.5rem] w-full items-center justify-center xl:w-[37.5rem]">
+        <div className="relative mx-0 flex h-[38.5rem] w-full items-center justify-center shadow-custom-shadow xl:w-[37.5rem]">
           <img
             src={artPiece.imageUrl}
             alt={artPiece.title}
