@@ -3,6 +3,12 @@ export interface LoginData {
   password: string;
 }
 
+export interface ResetPasswordData {
+  email: string;
+  currentPassword: string;
+  newPassword: string;
+}
+
 export interface ArtPieceLike {
   id: number;
   userId: number;
