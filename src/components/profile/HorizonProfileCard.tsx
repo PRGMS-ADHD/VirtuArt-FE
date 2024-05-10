@@ -16,7 +16,7 @@ const HorizonProfileCard: React.FC<HorizonProfileProps> = ({ children }) => {
         <img
           src={logo}
           alt="logo"
-          className="shadow-profile-shadow h-28 w-28 rounded-full stroke-1 object-cover"
+          className="h-28 w-28 rounded-full stroke-1 object-cover shadow-profile-shadow"
         />
         <div className="flex items-center justify-between">
           <div className="flex items-center">
