@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import useAuth from '@/hooks/useAuth';
 import Title from '../components/common/Title';
 import Input from '../components/common/Input';
 import Button from '../components/common/Button';
@@ -9,7 +10,7 @@ import Button from '../components/common/Button';
 type FormValues = {
   email: string;
   currentPassword: string;
-  password: string;
+  newPassword: string;
   passwordConfirm: string;
 };
 
@@ -17,7 +18,7 @@ const schema = z
   .object({
     email: z.string().email('Invalid email'),
     currentPassword: z.string().min(1, 'password is required'),
-    password: z
+    newPassword: z
       .string()
       .min(8, 'Need 8 characters')
       .regex(
@@ -26,12 +27,12 @@ const schema = z
       ),
     passwordConfirm: z.string(),
   })
-  .refine((data) => data.password === data.passwordConfirm, {
+  .refine((data) => data.newPassword === data.passwordConfirm, {
     message: 'Passwords must match',
     path: ['passwordConfirm'],
   });
 
-function Join() {
+function Reset() {
   const {
     register,
     handleSubmit,
@@ -40,10 +41,13 @@ function Join() {
     resolver: zodResolver(schema),
   });
 
-  const onSubmit = (data: FormValues) => {
-    console.log(data);
-  };
+  const { userResetPassword } = useAuth();
 
+  const onSubmit = async (data: FormValues) => {
+    console.log('onSubmit called', data);
+    const { passwordConfirm, ...resetPasswordData } = data;
+    await userResetPassword(resetPasswordData);
+  };
   return (
     <div className="flex flex-1 items-center justify-center">
       <form
@@ -82,12 +86,12 @@ function Join() {
             id="password"
             type="password"
             label="NEW PASSWORD"
-            register={register('password')}
+            register={register('newPassword')}
           />
           <p
-            className={`text-sm ${errors.password ? 'text-red-500' : 'text-transparent'} ml-1 mt-1 font-helvetica text-[10.5px] font-light`}
+            className={`text-sm ${errors.newPassword ? 'text-red-500' : 'text-transparent'} ml-1 mt-1 font-helvetica text-[10.5px] font-light`}
           >
-            {errors.password?.message || 'Placeholder'}
+            {errors.newPassword?.message || 'Placeholder'}
           </p>
         </div>
         <div>
@@ -104,7 +108,7 @@ function Join() {
           </p>
         </div>
         <div className="flex w-full flex-col">
-          <Button text="JOIN" type="submit" />
+          <Button text="RESET PASSWORD" type="submit" />
           <div className="ml-auto mr-1 mt-2 flex justify-center font-helvetica text-xs">
             <p className="mr-5 text-gray-400">Already have an account?</p>
             <Link to="/login" className="text-customGray2">
@@ -117,4 +121,4 @@ function Join() {
   );
 }
 
-export default Join;
+export default Reset;

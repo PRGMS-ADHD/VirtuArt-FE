@@ -1,9 +1,19 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuthStore } from '../../store/authStore';
 
 function NavLinks() {
+  const { isLoggedIn, storeLogout } = useAuthStore();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    storeLogout();
+    window.alert('Logout successful');
+    navigate('/');
+  };
+
   return (
     <nav>
-      <ul className="font-helvetica flex space-x-10 font-light">
+      <ul className="flex space-x-10 font-helvetica font-light">
         <li>
           <Link to="/">GALLERY</Link>
         </li>
@@ -14,7 +24,13 @@ function NavLinks() {
           <Link to="/exhibition">EXHIBITION</Link>
         </li>
         <li>
-          <Link to="/login">LOGIN</Link>
+          {isLoggedIn ? (
+            <button type="button" onClick={handleLogout}>
+              LOGOUT
+            </button>
+          ) : (
+            <Link to="/login">LOGIN</Link>
+          )}
         </li>
       </ul>
     </nav>

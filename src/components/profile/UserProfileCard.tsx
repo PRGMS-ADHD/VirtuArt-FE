@@ -60,9 +60,6 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({ children }) => {
             <p className="ml-[80px] font-noto-sans-kr text-3xl font-normal leading-normal text-black">
               {user?.username}
             </p>
-            <p className="font-noto-sans-kr text-sm font-normal leading-normal text-black">
-              &nbsp;(nickname 필요)
-            </p>
           </div>
           <div className="flex gap-x-4">{children}</div>
         </div>
