@@ -10,7 +10,7 @@ const ProfilePicture: React.FC<ProfilePictureProps> = ({ src, className }) => {
     <img
       src={src}
       alt="Profile"
-      className={`shadow-custom-dark h-32 w-32 flex-shrink-0 rounded-full border-2 border-white fill-current stroke-gray-200 stroke-2 object-cover text-white drop-shadow filter ${className}`}
+      className={`h-32 w-32 flex-shrink-0 rounded-full border-2 border-white fill-current stroke-gray-200 stroke-2 object-cover text-white shadow-custom-dark drop-shadow filter ${className} `}
     />
   );
 };

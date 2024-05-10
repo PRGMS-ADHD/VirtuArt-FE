@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { IoMdHeart } from 'react-icons/io';
+import formatNumberToK from '@/utils/format';
 
-const LikesButton: React.FC = () => {
+const LikesCountButton: React.FC = () => {
   const [isLiked, setIsLiked] = useState(false);
 
   const handleClick = () => {
@@ -15,13 +16,15 @@ const LikesButton: React.FC = () => {
       onClick={handleClick}
     >
       {isLiked ? (
-        <IoMdHeart className="ml-4 h-5 w-5 text-red-500" />
+        <IoMdHeart className="ml-2 h-5 w-5 text-red-500" />
       ) : (
-        <IoMdHeart className="ml-4 h-5 w-5 text-white" />
+        <IoMdHeart className="ml-2 h-5 w-5 text-white" />
       )}
-      <span className="mr-4 font-helvetica text-xs font-normal">LIKES</span>
+      <span className="mr-2 font-helvetica text-xs font-normal">
+        {formatNumberToK(200000)}
+      </span>
     </button>
   );
 };
 
-export default LikesButton;
+export default LikesCountButton;

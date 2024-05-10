@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { MdNavigateNext } from 'react-icons/md';
+import { Link } from 'react-router-dom';
 import { ArtPieces } from '../../data/artPieces';
 import LikesButton from '../image/LikesButton';
-import { MdNavigateNext } from 'react-icons/md';
-import { ArtPieceCategory } from '../../data/artPieceCategories'; // 카테고리 데이터 임포트
+import { ArtPieceCategory } from '@/data/artPieceCategories'; // 카테고리 데이터 임포트
 import ImageTooltip from './ImageTooltip';
-import { Link } from 'react-router-dom';
 
 interface ArtpieceProps {
   category: string;
