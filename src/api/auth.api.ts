@@ -1,9 +1,17 @@
 import { httpClient } from './http';
-import { LoginData } from '../models/user.model';
+import { LoginData, ResetPasswordData } from '../models/user.model';
 
-const login = async (userData: LoginData) => {
+export const login = async (userData: LoginData) => {
   const response = await httpClient.post('/auth/login', userData);
   return response.data;
 };
 
-export default login;
+export const resetPassword = async (data: ResetPasswordData) => {
+  const response = await httpClient.post('/auth/change-password', data);
+  return response.data;
+};
+
+export const getUserInfo = async (email: string) => {
+  const response = await httpClient.get(`/auth/${email}`);
+  return response.data;
+};
