@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { MdNavigateNext } from 'react-icons/md';
 import { Link } from 'react-router-dom';
+import { ArtPieceCategory } from '@/data/artPieceCategories'; // 카테고리 데이터 임포트
 import { ArtPieces } from '../../data/artPieces';
 import LikesButton from '../image/LikesButton';
-import { ArtPieceCategory } from '@/data/artPieceCategories'; // 카테고리 데이터 임포트
 import ImageTooltip from './ImageTooltip';
 
 interface ArtpieceProps {
@@ -18,6 +18,7 @@ const Artpiece: React.FC<ArtpieceProps> = ({ category }) => {
     title: '',
     description: '',
   });
+
   const [hoveredImageId, setHoveredImageId] = useState<string | null>(null);
   const categoryArtPieces = ArtPieces.filter(
     (artpiece) => artpiece.category === category,
