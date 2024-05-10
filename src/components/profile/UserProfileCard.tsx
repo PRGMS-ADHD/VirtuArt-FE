@@ -1,24 +1,48 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
+import { JwtPayload, jwtDecode } from 'jwt-decode';
+import { getUserInfo } from '@/api/auth.api';
 import ProfileLinks from './ProfileLinks';
 import ProfileTextArea from './ProfileTextArea';
 import ProfilePicture from './ProfilePicture';
 import logo from '../../assets/test1.png';
 import image from '../../assets/image1.jpeg';
 
-// export default ProfileCard;
-// interface ProfileCardProps {
-//   src: string;
-//   name: string;
-//   englishName: string;
-//   onLikeClick?: () => void;
-//   onSettingsClick?: () => void;
-// }
+interface User {
+  username: string;
+  email: string;
+  id: string;
+}
 
 interface UserProfileCardProps {
   children?: ReactNode;
 }
 
+interface DecodedToken extends JwtPayload {
+  email: string;
+}
+
 const UserProfileCard: React.FC<UserProfileCardProps> = ({ children }) => {
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const token = window.localStorage.getItem('token');
+      if (token) {
+        const decoded: DecodedToken = jwtDecode(token);
+        const { email } = decoded;
+
+        try {
+          const data = await getUserInfo(email);
+          setUser(data);
+        } catch (error) {
+          console.error('Error:', error);
+        }
+      }
+    };
+
+    fetchUser();
+  }, []);
+
   return (
     <div className="flex flex-col items-center justify-center">
       <img
@@ -34,10 +58,10 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({ children }) => {
         <div className="mt-6 flex items-center justify-between">
           <div className="flex items-center">
             <p className="ml-[80px] font-noto-sans-kr text-3xl font-normal leading-normal text-black">
-              정센트 반 희호
+              {user?.username}
             </p>
             <p className="font-noto-sans-kr text-sm font-normal leading-normal text-black">
-              &nbsp;(Jeongcent Van Heeho)
+              &nbsp;(nickname 필요)
             </p>
           </div>
           <div className="flex gap-x-4">{children}</div>
