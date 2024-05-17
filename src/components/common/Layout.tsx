@@ -28,9 +28,9 @@ interface LayoutProps {
 
 const Layout = ({ children }: LayoutProps) => {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center">
+    <div className="flex min-h-screen w-full flex-col items-stretch justify-center">
       <Header />
-      <div className="flex flex-grow">{children}</div>
+      <div className="flex w-full flex-1 justify-center">{children}</div>
       <Footer />
     </div>
   );
