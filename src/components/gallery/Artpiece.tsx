@@ -23,9 +23,7 @@ const Artpiece: React.FC<ArtpieceProps> = ({ category }) => {
     [key: string]: boolean;
   }>({});
   const [artWorks, setArtWorks] = useState<ArtworkModel[]>([]);
-  const filteredArtWorks = artWorks.filter(
-    (artWork) => artWork.category === category.id,
-  );
+
   const token = localStorage.getItem('token');
 
   useEffect(() => {
@@ -36,6 +34,12 @@ const Artpiece: React.FC<ArtpieceProps> = ({ category }) => {
 
     fetchArtPieces();
   }, []);
+
+  const filteredArtWorks = artWorks.filter(
+    (artWork) => artWork.category === category.id.toString(),
+  );
+
+  console.log(filteredArtWorks, 'filteredArtWorks');
 
   const handleNext = () => {
     setCurrentIndex((currentIndex + 1) % filteredArtWorks.length);
@@ -64,11 +68,12 @@ const Artpiece: React.FC<ArtpieceProps> = ({ category }) => {
 
   const isEvenCategory =
     ArtPieceCategory.findIndex((cat) => cat.name === category.name) % 2 === 0;
+
   const bgClass = isEvenCategory ? 'bg-gray-100' : '';
 
-  if (filteredArtWorks.length === 0) {
-    return null;
-  }
+  // if (filteredArtWorks.length === 0) {
+  //   return null;
+  // }
 
   return (
     <div

@@ -1,5 +1,6 @@
 import Artpiece from './Artpiece';
 import { ArtPieceCategory } from '../../data/artPieceCategories';
+
 const ArtpieceList = () => {
   return (
     <div>
