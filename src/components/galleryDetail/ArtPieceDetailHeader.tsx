@@ -1,7 +1,5 @@
-import React from 'react';
-
 const ArtPieceDetailHeader = () => {
-  return <div></div>;
+  return <div>aa</div>;
 };
 
 export default ArtPieceDetailHeader;

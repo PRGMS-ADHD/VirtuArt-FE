@@ -1,9 +1,9 @@
 import React, { ReactNode } from 'react';
-import { Artist } from '@/models/artist.model';
+import { ArtistModel } from '@/models/artist.model';
 import ProfileLinks from './ProfileLinks';
-import ProfileTextArea from './ProfileTextArea';
+// import ProfileTextArea from './ProfileTextArea';
 import ProfilePicture from './ProfilePicture';
-import image from '../../assets/image1.jpeg';
+import image from '../../../assets/image1.jpeg';
 
 // export default ProfileCard;
 // interface ProfileCardProps {
@@ -16,7 +16,7 @@ import image from '../../assets/image1.jpeg';
 
 interface ArtistProfileCardProps {
   children?: ReactNode;
-  artist: Artist;
+  artist: ArtistModel;
 }
 
 const ArtistProfile: React.FC<ArtistProfileCardProps> = ({
@@ -48,7 +48,7 @@ const ArtistProfile: React.FC<ArtistProfileCardProps> = ({
         </div>
         <ProfileLinks />
         <div className="flex flex-1 items-center justify-center">
-          <ProfileTextArea text={artist.intro} />
+          {/*<ProfileTextArea text={artist.intro} />*/}
         </div>
       </div>
     </div>

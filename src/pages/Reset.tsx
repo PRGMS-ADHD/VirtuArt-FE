@@ -6,6 +6,9 @@ import useAuth from '@/hooks/useAuth';
 import Title from '../components/common/Title';
 import Input from '../components/common/Input';
 import Button from '../components/common/Button';
+import React from 'react';
+import { useAuthStore } from '@/store/authStore.ts';
+import { jwtDecode } from 'jwt-decode';
 
 type FormValues = {
   email: string;
@@ -33,13 +36,24 @@ const schema = z
   });
 
 function Reset() {
+  const token = useAuthStore((state) => state.token); // 토큰 가져오기
+  const email = token ? jwtDecode<{ email: string }>(token).email : ''; // 토큰 디코드하여 이메일 가져오기
+
   const {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm<FormValues>({
     resolver: zodResolver(schema),
+    defaultValues: {
+      email,
+    },
   });
+
+  React.useEffect(() => {
+    setValue('email', email); // 이메일 필드에 이메일 설정
+  }, [email, setValue]);
 
   const { userResetPassword } = useAuth();
 
@@ -56,11 +70,13 @@ function Reset() {
       >
         <Title text="VIRTU" boldText="ART" />
         <div>
-          <Input
+          <input
             id="email"
             type="email"
-            label="EMAIL"
-            register={register('email')}
+            {...register('email', {
+              disabled: true,
+            })}
+            className="h-12 w-[23rem] rounded-md border border-gray-700 bg-customGray4 pl-5 font-[Helvetica] text-base font-normal leading-normal text-black opacity-100"
           />
           <p
             className={`text-sm ${errors.email ? 'text-red-500' : 'text-transparent'} ml-1 mt-1 font-helvetica text-[10.5px] font-light`}

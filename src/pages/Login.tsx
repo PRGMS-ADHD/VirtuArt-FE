@@ -13,7 +13,7 @@ const schema = z.object({
   email: z.string().email('Email is required'),
   password: z
     .string()
-    .min(8, 'Password must be at least 8 characters')
+    .min(8, 'Min 8 characters')
     .regex(
       /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/,
       'Need 1 letter & 1 number',
