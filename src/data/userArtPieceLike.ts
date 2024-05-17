@@ -1,4 +1,4 @@
-import ArtPieces, { ArtPiece } from './artPieces';
+import { ArtPiece, ArtPieces } from './artPieces';
 
 interface UserArtPieceLike {
   id: number;

@@ -15,3 +15,8 @@ export interface ArtPieceLike {
   artPieceId: number;
   imageUrl: string;
 }
+
+export interface SignUpData {
+  email: string;
+  password: string;
+}
