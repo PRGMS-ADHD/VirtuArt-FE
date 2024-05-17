@@ -13,16 +13,18 @@ function NavLinks() {
 
   return (
     <nav>
-      <ul className="flex space-x-10 font-helvetica font-light">
+      <ul className="flex flex-col space-y-8 pl-8 font-helvetica font-light xl:flex-row xl:space-x-10 xl:space-y-0">
         <li>
           <Link to="/">GALLERY</Link>
         </li>
         <li>
           <Link to="/artists">ARTISTS</Link>
         </li>
-        <li>
-          <Link to="/exhibition">EXHIBITION</Link>
-        </li>
+        {isLoggedIn && (
+          <li>
+            <Link to="/mypage">MYPAGE</Link>
+          </li>
+        )}
         <li>
           {isLoggedIn ? (
             <button type="button" onClick={handleLogout}>
