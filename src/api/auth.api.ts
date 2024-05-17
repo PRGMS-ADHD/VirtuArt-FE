@@ -1,5 +1,5 @@
 import { httpClient } from './http';
-import { LoginData, ResetPasswordData } from '../models/user.model';
+import { LoginData, ResetPasswordData, SignUpData } from '../models/user.model';
 
 export const login = async (userData: LoginData) => {
   const response = await httpClient.post('/auth/login', userData);
@@ -8,6 +8,11 @@ export const login = async (userData: LoginData) => {
 
 export const resetPassword = async (data: ResetPasswordData) => {
   const response = await httpClient.post('/auth/change-password', data);
+  return response.data;
+};
+
+export const signUp = async (data: SignUpData) => {
+  const response = await httpClient.post('/auth/register', data);
   return response.data;
 };
 
