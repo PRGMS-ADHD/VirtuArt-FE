@@ -1,50 +1,51 @@
 import { useState } from 'react';
 import { MdNavigateNext } from 'react-icons/md';
 import { Link } from 'react-router-dom';
-import { Artists } from '../../data/artists';
-import { ArtPieceCategory } from '../../data/artPieceCategories'; // Ensure this import is correct
 
-interface ArtistsInfoProps {
-  category: string;
-}
-
-const ArtistsInfo: React.FC<ArtistsInfoProps> = ({ category }) => {
+const ArtistsInfo = ({ artists }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const categoryArtists = Artists.filter(
-    artist => artist.category === category,
-  );
-
-  // Assuming ArtPieceCategory is an array of categories with a 'name' property
-  const isEvenCategory = ArtPieceCategory.findIndex((cat) => cat.name === category) % 2 !== 1;
-  const bgClass = isEvenCategory ? 'bg-gray-100' : '';
 
   const handleNext = () => {
-    if (currentIndex < categoryArtists.length - 6) {
-      setCurrentIndex(currentIndex + 6);
-    } else {
-      setCurrentIndex(0);
-    }
+    setCurrentIndex((prevIndex) =>
+      prevIndex < artists.length - 6 ? prevIndex + 6 : 0,
+    );
   };
 
   return (
-    <div className={`relative flex w-full items-center justify-center py-6 ${bgClass}`}>
-      <div className="relative grid grid-cols-6 gap-4">
-        {categoryArtists.slice(currentIndex, currentIndex + 6).map((artist) => (
-          <div key={artist.id} style={{ position: 'relative' }}>
-            <Link to={`/artist/${artist.id}`}>
-              <img
-                src={artist.imageUrl}
-                alt={artist.name}
-                width={100}
-                height={100}
-              />
+    <div className="relative flex w-full items-center justify-center py-6">
+      <div className="relative grid grid-cols-2 justify-items-center gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+        {artists.slice(currentIndex, currentIndex + 6).map((artist) => (
+          <div key={artist._id} className="relative inline-block rounded p-1">
+            <Link to={`/artist/${artist._id}`}>
+              <div
+                className="relative overflow-hidden rounded-full border border-gray-500 shadow-lg"
+                style={{
+                  width: '20vw',
+                  height: '20vw',
+                  minWidth: '100px',
+                  minHeight: '100px',
+                  maxWidth: '200px',
+                  maxHeight: '200px',
+                  border: '1px solid rgba(0, 0, 0, 0.5)',
+                  boxShadow: '0px 4px 8.5px #000000',
+                }}
+              >
+                <img
+                  src={artist.profile_image}
+                  alt={artist.name}
+                  className="block h-full w-full object-cover"
+                />
+              </div>
+              <div className="mt-2 text-center font-noto-sans-kr text-[16px] font-medium text-customGray3">
+                {artist.name}
+              </div>
             </Link>
           </div>
         ))}
       </div>
       <button
         onClick={handleNext}
-        className="absolute right-0 flex h-[40px] w-[40px] items-center justify-center rounded-full bg-white shadow-md transition-transform duration-500 ease-in-out hover:scale-110"
+        className="relative bottom-2 right-6 flex h-[40px] w-[40px] items-center justify-center rounded-full bg-white shadow-md transition-transform duration-500 ease-in-out hover:scale-110"
       >
         <MdNavigateNext className="text-lg" />
       </button>
