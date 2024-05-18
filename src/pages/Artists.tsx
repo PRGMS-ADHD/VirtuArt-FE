@@ -1,28 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import axios from 'axios';
-import ArtistsList from '../components/artists/ArtistsList';
+import { ArtistModel } from '@/models/artist.model';
+import ArtistsList, { Category } from '../components/artists/ArtistsList';
 
 // Artist와 Category 타입 정의
-interface Artist {
-  id: string;
-  name: string;
-  category: string;
-}
-
-interface Category {
-  id: string;
-  name: string;
-}
 
 const Artists = () => {
-  const [artists, setArtists] = useState<Artist[]>([]);
+  const [artists, setArtists] = useState<ArtistModel[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
 
   useEffect(() => {
     const fetchArtists = async () => {
       try {
-        const response = await axios.get<Artist[]>(
+        const response = await axios.get<ArtistModel[]>(
           'http://localhost:3000/artist/all',
         );
         setArtists(response.data);
