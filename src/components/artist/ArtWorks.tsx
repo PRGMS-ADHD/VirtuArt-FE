@@ -2,14 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import LoadMoreButton from '@/components/common/LoadMoreButton';
 import { ArtistModel } from '@/models/artist.model';
-// import LikesButton from '@/components/image/LikesButton';
 import { fetchAllArtWorks } from '@/api/images.api';
 import { ArtworkModel } from '@/models/artwork.model';
+// import LikesButton from '@/components/image/LikesButton';
 
 interface ArtWorksProps {
   errorImage: string;
   className?: string;
-  showLikesButton?: boolean; // 새로운 속성 추가
+  // showLikesButton?: boolean; // 새로운 속성 추가
   artist: ArtistModel | null;
 }
 
@@ -81,7 +81,7 @@ const ArtWorks: React.FC<ArtWorksProps> = ({
     >
       <div className="border-b border-customGray6">
         <div className="pt-8">
-          <p className="mb-1 ml-1 font-helveticaNeue text-xl">OTHER WORKS</p>
+          <p className="mb-1 ml-1 font-helveticaNeue text-xl">ARTWORKS</p>
           <div className="relative grid grid-cols-1 gap-8 transition-all duration-700 sm:grid-cols-2 custom:grid-cols-4">
             {artworks.slice(0, visibleItems).map((artwork) => (
               <div
@@ -101,11 +101,9 @@ const ArtWorks: React.FC<ArtWorksProps> = ({
                     className="h-[200px] w-[350px] object-cover"
                   />
                 )}
-                {/*{showLikesButton && (*/}
-                {/*  <div className="absolute right-0 top-0 p-2">*/}
-                {/*    <LikesButton artistId={artwork._id} />*/}
-                {/*  </div>*/}
-                {/*)}*/}
+                <div className="absolute right-0 top-0 p-2">
+                  {/*<LikesButton initialLiked={} onLikeStatusChange={} />*/}
+                </div>
               </div>
             ))}
           </div>
