@@ -1,27 +1,44 @@
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import ArtistsList from '../components/artists/ArtistsList';
-import { useState, useEffect } from 'react';
 import axios from 'axios';
+import ArtistsList from '../components/artists/ArtistsList';
+
+// Artist와 Category 타입 정의
+interface Artist {
+  id: string;
+  name: string;
+  category: string;
+}
+
+interface Category {
+  id: string;
+  name: string;
+}
 
 const Artists = () => {
-  const [artists, setArtists] = useState([]);
-  const [categories, setCategories] = useState([]);
+  const [artists, setArtists] = useState<Artist[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
 
   useEffect(() => {
     const fetchArtists = async () => {
-      const response = await axios.get('http://localhost:3000/artist/all');
-      setArtists(response.data);
+      try {
+        const response = await axios.get<Artist[]>(
+          'http://localhost:3000/artist/all',
+        );
+        setArtists(response.data);
 
-      // Extract unique categories from the artists data
-      const uniqueCategories = Array.from(
-        new Set(response.data.map((artist) => artist.category)),
-      );
-      setCategories(
-        uniqueCategories.map((category) => ({
-          id: category,
-          name: category, // Adjust if you have a proper name for each category
-        })),
-      );
+        const uniqueCategories = Array.from(
+          new Set(response.data.map((artist) => artist.category)),
+        );
+        setCategories(
+          uniqueCategories.map((category) => ({
+            id: category,
+            name: category,
+          })),
+        );
+      } catch (error) {
+        console.error('Error fetching artists:', error);
+      }
     };
     fetchArtists();
   }, []);
@@ -35,7 +52,7 @@ const Artists = () => {
         className="my-2 font-medium"
         style={{
           fontFamily: 'Helvetica Neue',
-          fontSize: 'clamp(24px, 5vw, 40px)', // 반응형 폰트 크기 설정
+          fontSize: 'clamp(24px, 5vw, 40px)',
         }}
       >
         Meet the Artists Behind the Canvas!
@@ -47,7 +64,7 @@ const Artists = () => {
         className="mb-8 font-extralight"
         style={{
           fontFamily: 'Noto Sans KR',
-          fontSize: 'clamp(12px, 5vw, 20px)', 
+          fontSize: 'clamp(12px, 5vw, 20px)',
         }}
       >
         창작의 매력에 빠져보세요! 여러분을 기다리는 아티스트들이 있습니다.
