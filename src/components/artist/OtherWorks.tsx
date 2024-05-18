@@ -9,7 +9,7 @@ import { ArtworkModel } from '@/models/artwork.model';
 interface FetchAndDisplayGridProps {
   errorImage: string;
   className?: string;
-  showLikesButton?: boolean; // 새로운 속성 추가
+  // showLikesButton?: boolean; // 새로운 속성 추가
   artist: ArtistModel | null;
 }
 
@@ -102,11 +102,9 @@ const OtherWorks: React.FC<FetchAndDisplayGridProps> = ({
                     className="h-[200px] w-[350px] object-cover"
                   />
                 )}
-                {/*{showLikesButton && (*/}
-                {/*  <div className="absolute right-0 top-0 p-2">*/}
-                {/*    <LikesButton artistId={artwork._id} />*/}
-                {/*  </div>*/}
-                {/*)}*/}
+                <div className="absolute right-0 top-0 p-2">
+                  {/*<LikesButton artistId={artwork._id} />*/}
+                </div>
               </div>
             ))}
           </div>
