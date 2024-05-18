@@ -1,114 +1,14 @@
-// // import { fetchArtists } from '@/api/images.api';
-// // import FetchAndDisplayGrid from '../common/FetchAndDisplayGrid';
-// // import errorImage from '../../../public/errorImage/artErrorImg.jpg';
-// //
-// // const LikedWorks: React.FC = () => {
-// //   return (
-// //     <FetchAndDisplayGrid
-// //       title="LIKED WORKS"
-// //       fetchFunction={fetchArtists}
-// //       errorImage={errorImage}
-// //       className="bg-customGray5"
-// //       showLikesButton={false}
-// //     />
-// //   );
-// // };
-// //
-// // export default LikedWorks;
-// import React, { useEffect, useState } from 'react';
-// import { fetchUserLikedArtworks } from '../../api/likes.api';
-// import FetchAndDisplayGrid from '../common/FetchAndDisplayGrid';
-// import errorImage from '../../../public/errorImage/artErrorImg.jpg';
-//
-// const LikedWorks: React.FC = () => {
-//   const [token, setToken] = useState<string | null>(null); // 사용자 토큰 상태
-//
-//   useEffect(() => {
-//     const storedToken = localStorage.getItem('token');
-//     if (storedToken) {
-//       setToken(storedToken);
-//     }
-//   }, []);
-//
-//   if (!token) {
-//     return <div>Loading...</div>;
-//   }
-//
-//   return (
-//     <FetchAndDisplayGrid
-//       title="LIKED WORKS"
-//       fetchFunction={() => fetchUserLikedArtworks(token)}
-//       errorImage={errorImage}
-//       showLikesButton={false}
-//     />
-//   );
-// };
-//
-// export default LikedWorks;
-
-//
-// import React, { useEffect, useState } from 'react';
-// import { fetchUserLikedArtworks } from '../../api/likes.api';
-// import errorImage from '../../../public/errorImage/artErrorImg.jpg';
-//
-// const LikedWorks: React.FC = () => {
-//   const [token, setToken] = useState<string | null>(null); // 사용자 토큰 상태
-//   const [likedWorks, setLikedWorks] = useState<any[]>([]); // 좋아요 누른 작품 상태
-//
-//   useEffect(() => {
-//     const storedToken = localStorage.getItem('token');
-//     if (storedToken) {
-//       setToken(storedToken);
-//     }
-//   }, []);
-//
-//   useEffect(() => {
-//     const fetchWorks = async () => {
-//       if (token) {
-//         try {
-//           const works = await fetchUserLikedArtworks(token);
-//           setLikedWorks(works);
-//           console.log(works);
-//         } catch (error) {
-//           console.error('Error fetching liked artworks:', error);
-//         }
-//       }
-//     };
-//     fetchWorks();
-//   }, [token]);
-//
-//   if (!token) {
-//     return <div>Loading...</div>;
-//   }
-//
-//   return (
-//     <div>
-//       <h2>LIKED WORKS</h2>
-//       <div>
-//         {likedWorks.map((work) => (
-//           <div key={work._id}>
-//             {work.image ? (
-//               <img src={work.image} alt={work.name} />
-//             ) : (
-//               <img src={errorImage} alt="errorImage" />
-//             )}
-//           </div>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// };
-//
-// export default LikedWorks;
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LoadMoreButton from '@/components/common/LoadMoreButton';
+import { fetchArtWorksById } from '@/api/images.api';
+import { ArtworkModel } from '@/models/artwork.model';
 import { fetchUserLikedArtworks } from '../../api/likes.api';
 import errorImage from '../../../public/errorImage/artErrorImg.jpg';
 
 const LikedWorks: React.FC = () => {
   const [token, setToken] = useState<string | null>(null); // 사용자 토큰 상태
-  const [likedWorks, setLikedWorks] = useState<any[]>([]); // 좋아요 누른 작품 상태
+  const [likedWorks, setLikedWorks] = useState<ArtworkModel[]>([]); // 좋아요 누른 작품 상태
   const [visibleItems, setVisibleItems] = useState(8);
   const [isExpanded, setIsExpanded] = useState(false);
   const navigate = useNavigate();
@@ -124,8 +24,13 @@ const LikedWorks: React.FC = () => {
     const fetchWorks = async () => {
       if (token) {
         try {
-          const works = await fetchUserLikedArtworks(token);
-          setLikedWorks(works);
+          const likedArtworkData = await fetchUserLikedArtworks(token);
+          const worksDetails = await Promise.all(
+            likedArtworkData.map((work: ArtworkModel) =>
+              fetchArtWorksById(work._id),
+            ),
+          );
+          setLikedWorks(worksDetails);
         } catch (error) {
           console.error('Error fetching liked artworks:', error);
         }
