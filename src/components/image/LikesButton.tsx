@@ -98,7 +98,8 @@ const LikesButton: React.FC<LikesButtonProps> = ({
 }) => {
   const [isLiked, setIsLiked] = useState(initialLiked);
 
-  const handleClick = () => {
+  const handleClick = (event: React.MouseEvent) => {
+    event.stopPropagation();
     setIsLiked(!isLiked);
     onLikeStatusChange();
   };
@@ -113,7 +114,7 @@ const LikesButton: React.FC<LikesButtonProps> = ({
           type="button"
         >
           <AnimatePresence>
-            {isLiked ? (
+            {initialLiked ? (
               <motion.div
                 key="like-icon"
                 initial={{ opacity: 0, scale: 0 }}
