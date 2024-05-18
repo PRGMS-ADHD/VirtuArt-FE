@@ -7,7 +7,7 @@ export interface ArtworkModel {
   intro: string;
   tags: string[];
   image: string;
-  category: number;
+  category: string;
   description: string;
   artist_id: string;
 }
