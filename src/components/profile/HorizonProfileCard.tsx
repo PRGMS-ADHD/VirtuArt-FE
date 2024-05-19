@@ -1,12 +1,20 @@
 import React, { ReactNode } from 'react';
-import ProfileTextArea from './ProfileTextArea';
-import logo from '../../assets/test1.png';
+import { ArtistModel } from '@/models/artist.model';
+// import ProfileTextArea from './ProfileTextArea';
+import logo from '../../../assets/logo.png';
 
 interface HorizonProfileProps {
   children?: ReactNode;
+  artist: ArtistModel | null;
 }
 
-const HorizonProfileCard: React.FC<HorizonProfileProps> = ({ children }) => {
+const HorizonProfileCard: React.FC<HorizonProfileProps> = ({
+  children,
+  artist,
+}) => {
+  if (!artist) {
+    return <div>Loading...</div>;
+  }
   return (
     <div className="flex items-center justify-center bg-customGray5 p-6">
       <div className="relative mt-16 flex flex-col 2xl:flex-row">
@@ -14,23 +22,23 @@ const HorizonProfileCard: React.FC<HorizonProfileProps> = ({ children }) => {
           ARTIST
         </p>
         <img
-          src={logo}
+          src={artist.profile_image || logo}
           alt="logo"
           className="h-28 w-28 rounded-full stroke-1 object-cover shadow-profile-shadow"
         />
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <p className="ml-4 font-noto-sans-kr text-3xl font-normal leading-normal text-black">
-              정센트 반 희호
+              {artist.name}
             </p>
             <p className="mr-4 font-noto-sans-kr text-sm font-normal leading-normal text-black">
-              &nbsp;(Jeongcent Van Heeho)
+              &nbsp;({artist.e_name})
             </p>
           </div>
           <div className="mr-3 flex gap-x-4">{children}</div>
         </div>
         <div className="hidden lg:block">
-          <ProfileTextArea />
+          {/* TODO <ProfileTextArea text={artist.intro} />*/}
         </div>
       </div>
     </div>

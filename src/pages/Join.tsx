@@ -1,14 +1,16 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import Title from '../components/common/Title';
 import Input from '../components/common/Input';
 import Button from '../components/common/Button';
+import { signUp } from '@/api/auth.api';
+import axios from 'axios';
 
 type FormValues = {
   email: string;
-  nickname: string;
+  // nickname: string;
   password: string;
   passwordConfirm: string;
 };
@@ -16,7 +18,7 @@ type FormValues = {
 const schema = z
   .object({
     email: z.string().min(1, 'Email is required').email('Invalid email'),
-    nickname: z.string().min(1, 'Nickname is required'),
+    // nickname: z.string().min(1, 'Nickname is required'),
     password: z
       .string()
       .min(8, 'Need 8 characters')
@@ -40,8 +42,24 @@ function Join() {
     resolver: zodResolver(schema),
   });
 
-  const onSubmit = (data: FormValues) => {
-    console.log(data);
+  const navigate = useNavigate();
+
+  const onSubmit = async (data: FormValues) => {
+    try {
+      const signUpData = {
+        email: data.email,
+        password: data.password,
+      };
+      await signUp(signUpData);
+      alert('Successfully signed up');
+      navigate('/');
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        const errorMessage = error.response.data.message;
+        console.error('Sign-up error:', errorMessage);
+        alert(errorMessage);
+      }
+    }
   };
 
   return (
@@ -64,19 +82,19 @@ function Join() {
             {errors.email?.message || 'Placeholder'}
           </p>
         </div>
-        <div>
-          <Input
-            id="nickname"
-            type="text"
-            label="NICKNAME"
-            register={register('nickname')}
-          />
-          <p
-            className={`text-sm ${errors.nickname ? 'text-red-500' : 'text-transparent'} ml-1 mt-1 font-helvetica text-[10px] font-light`}
-          >
-            {errors.nickname?.message || 'Placeholder'}
-          </p>
-        </div>
+        {/*<div>*/}
+        {/*  <Input*/}
+        {/*    id="nickname"*/}
+        {/*    type="text"*/}
+        {/*    label="NICKNAME"*/}
+        {/*    register={register('nickname')}*/}
+        {/*  />*/}
+        {/*  <p*/}
+        {/*    className={`text-sm ${errors.nickname ? 'text-red-500' : 'text-transparent'} ml-1 mt-1 font-helvetica text-[10px] font-light`}*/}
+        {/*  >*/}
+        {/*    {errors.nickname?.message || 'Placeholder'}*/}
+        {/*  </p>*/}
+        {/*</div>*/}
         <div>
           <Input
             id="password"
@@ -107,7 +125,7 @@ function Join() {
           <Button text="JOIN" type="submit" />
           <div className="ml-auto mr-1 mt-2 flex justify-center font-helvetica text-xs">
             <p className="mr-5 text-gray-400">Already have an account?</p>
-            <Link to="/signup" className="text-customGray2">
+            <Link to="/login" className="text-customGray2">
               LOGIN
             </Link>
           </div>

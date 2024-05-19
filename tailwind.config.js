@@ -29,9 +29,6 @@ export default {
         'custom-shadow': '0px 2px 4px 0px rgba(0, 0, 0, 0.25)',
         'profile-shadow': '0px 4px 4px rgba(0, 0, 0, 0.25)',
       },
-      borderWidth: {
-        1: '1px',
-      },
       width: {
         1540: '1540px',
       },
@@ -47,20 +44,8 @@ export default {
       borderWidth: {
         1: '1px',
       },
-      width: {
-        1540: '1540px',
-      },
-      borderWidth: {
-        1: '1px',
-      },
-      width: {
-        1540: '1540px',
-      },
-      borderWidth: {
-        1: '1px',
-      },
-      width: {
-        1540: '1540px',
+      screens: {
+        custom: '1160px',
       },
     },
   },

@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig } from 'axios';
-import { getToken, removeToken } from '../store/authStore';
+import { getToken, useAuthStore } from '../store/authStore';
 
 const BASE_URL = 'http://localhost:3000';
 const DEFAULT_TIMEOUT = 30000;
@@ -16,29 +16,17 @@ export const createClient = (config?: AxiosRequestConfig) => {
     ...config,
   });
 
-  // Request interceptor
-  axiosInstance.interceptors.request.use((request) => {
-    console.log('Starting Request', request);
-    return request;
-  });
-
-  // Response interceptor
   axiosInstance.interceptors.response.use(
-    (response) => {
-      console.log('Response:', response);
-      return response;
-    },
+    (response) => response,
     (error) => {
-      console.log('Error:', error);
-      if (error.response.status === 401) {
-        // 로그인 만료 처리
-        removeToken();
-        window.location.href = '/login';
-        return;
+      if (error.response && error.response.status === 401) {
+        const store = useAuthStore.getState(); // Zustand 스토어의 상태 직접 접근
+        store.storeLogout(); // 로그아웃 처리
       }
       return Promise.reject(error);
     },
   );
+
   return axiosInstance;
 };
 

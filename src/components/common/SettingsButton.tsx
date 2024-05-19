@@ -9,7 +9,7 @@ const SettingsButton: React.FC<SettingsButtonProps> = ({ onClick }) => {
   return (
     <button
       type="button"
-      className="flex h-[30px] w-[100px] items-center justify-center bg-black text-white shadow-md"
+      className="flex h-8 w-24 items-center justify-center bg-black text-white shadow-md"
       onClick={onClick}
     >
       <Cog6ToothIcon className="mr-1 h-5 w-5" />
