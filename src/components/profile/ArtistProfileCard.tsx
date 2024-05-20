@@ -3,7 +3,7 @@ import { ArtistModel } from '@/models/artist.model';
 import ProfileLinks from './ProfileLinks';
 // import ProfileTextArea from './ProfileTextArea';
 import ProfilePicture from './ProfilePicture';
-import image from '../../../assets/image1.jpeg';
+import image from '../../../assets/image3.jpeg';
 
 // export default ProfileCard;
 // interface ProfileCardProps {
