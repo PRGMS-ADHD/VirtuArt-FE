@@ -1,25 +1,32 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import axios from 'axios';
-import { ArtistModel } from '@/models/artist.model';
-import ArtistsList, { Category } from '../components/artists/ArtistsList';
+import { fetchArtists } from '../api/http'; // 수정된 부분
+import ArtistsList from '../components/artists/ArtistsList';
 
 // Artist와 Category 타입 정의
+interface Artist {
+  id: string;
+  name: string;
+  category: string;
+}
+
+interface Category {
+  id: string;
+  name: string;
+}
 
 const Artists = () => {
-  const [artists, setArtists] = useState<ArtistModel[]>([]);
+  const [artists, setArtists] = useState<Artist[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
 
   useEffect(() => {
-    const fetchArtists = async () => {
+    const fetchArtistsData = async () => {
       try {
-        const response = await axios.get<ArtistModel[]>(
-          'http://localhost:3000/artist/all',
-        );
-        setArtists(response.data);
+        const artistsData = await fetchArtists();
+        setArtists(artistsData);
 
         const uniqueCategories = Array.from(
-          new Set(response.data.map((artist) => artist.category)),
+          new Set(artistsData.map((artist) => artist.category)),
         );
         setCategories(
           uniqueCategories.map((category) => ({
@@ -31,7 +38,7 @@ const Artists = () => {
         console.error('Error fetching artists:', error);
       }
     };
-    fetchArtists();
+    fetchArtistsData();
   }, []);
 
   return (
