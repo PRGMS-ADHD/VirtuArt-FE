@@ -2,7 +2,7 @@ import React from 'react';
 
 interface ImageTooltipProps {
   title: string;
-  artist: string;
+  artist?: string;
 }
 
 const ImageTooltip: React.FC<ImageTooltipProps> = ({ title, artist }) => {

@@ -5,6 +5,7 @@ import { ArtistModel } from '@/models/artist.model';
 // import LikesButton from '@/components/image/LikesButton';
 import { fetchAllArtWorks } from '@/api/images.api';
 import { ArtworkModel } from '@/models/artwork.model';
+import ImageTooltip from '@/components/gallery/ImageTooltip.tsx';
 
 interface FetchAndDisplayGridProps {
   errorImage: string;
@@ -22,6 +23,9 @@ const OtherWorks: React.FC<FetchAndDisplayGridProps> = ({
   const [artworks, setArtWorks] = useState<ArtworkModel[]>([]);
   const [visibleItems, setVisibleItems] = useState(8);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [hoveredImageId, setHoveredImageId] = useState<string | null>(null);
+  const [showTooltip, setShowTooltip] = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -76,6 +80,15 @@ const OtherWorks: React.FC<FetchAndDisplayGridProps> = ({
     navigate(`/artworks/${artWorkId}`);
   };
 
+  const handleMouseEnter = (id: string) => {
+    setShowTooltip(true);
+    setHoveredImageId(id);
+  };
+
+  const handleMouseLeave = () => {
+    setShowTooltip(false);
+  };
+
   return (
     <div
       className={`my-6 flex flex-col items-center justify-center ${className} px-8`}
@@ -89,6 +102,8 @@ const OtherWorks: React.FC<FetchAndDisplayGridProps> = ({
                 key={artwork._id}
                 className="relative cursor-pointer"
                 onClick={() => handleArtistClick(artwork._id)}
+                onMouseEnter={() => handleMouseEnter(artwork._id)}
+                onMouseLeave={handleMouseLeave}
               >
                 {artwork.image ? (
                   <img
@@ -105,6 +120,9 @@ const OtherWorks: React.FC<FetchAndDisplayGridProps> = ({
                 <div className="absolute right-0 top-0 p-2">
                   {/*<LikesButton artistId={artwork._id} />*/}
                 </div>
+                {showTooltip && hoveredImageId === artwork._id && (
+                  <ImageTooltip title={artwork.name} artist={artwork.artist} />
+                )}
               </div>
             ))}
           </div>

@@ -1,7 +1,8 @@
 import React, { ReactNode } from 'react';
 import { ArtistModel } from '@/models/artist.model';
-import ProfileLinks from './ProfileLinks';
+// import ProfileLinks from './ProfileLinks';
 // import ProfileTextArea from './ProfileTextArea';
+import ArtistProfileLinks from '@/components/profile/ArtistProfileLinks';
 import ProfilePicture from './ProfilePicture';
 import image from '../../../assets/image3.jpeg';
 
@@ -46,7 +47,7 @@ const ArtistProfile: React.FC<ArtistProfileCardProps> = ({
           </div>
           <div className="flex gap-x-4">{children}</div>
         </div>
-        <ProfileLinks />
+        <ArtistProfileLinks artist={artist} />
         <div className="flex flex-1 items-center justify-center">
           {/*<ProfileTextArea text={artist.intro} />*/}
         </div>

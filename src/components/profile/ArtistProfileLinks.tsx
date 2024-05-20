@@ -1,39 +1,39 @@
 import IconLink from '../common/IconLink';
-import { User } from '@/models/user.model';
 import React from 'react';
+import { ArtistModel } from '@/models/artist.model';
 
 interface ProfileLinksProps {
-  user: User | null;
+  artist: ArtistModel | null;
 }
 
-const ProfileLinks: React.FC<ProfileLinksProps> = ({ user }) => {
+const ArtistProfileLinks: React.FC<ProfileLinksProps> = ({ artist }) => {
   return (
     <div className="ml-36 mt-5 flex items-baseline justify-between custom:mb-4 custom:ml-14">
       <IconLink
         type="location"
-        text="서울, 대한민국"
+        text={artist?.location || ''}
         to="/"
         iconSize="w-4 h-4"
       />
       <div className="mb-2 mr-4 flex space-x-4 custom:mr-2">
-        <IconLink
-          type="contact"
-          text={user?.email || ''}
-          to="/"
-          iconSize="w-4 h-4"
-        />
-        <IconLink
-          type="instagram"
-          text="@vanheeho"
-          to="https://instagram.com"
-          iconSize="w-4 h-4"
-        />
+        {/*<IconLink*/}
+        {/*  type="contact"*/}
+        {/*  text={artist?.email || ''}*/}
+        {/*  to="/"*/}
+        {/*  iconSize="w-4 h-4"*/}
+        {/*/>*/}
+        {/*<IconLink*/}
+        {/*  type="instagram"*/}
+        {/*  text="@vanheeho"*/}
+        {/*  to="https://instagram.com"*/}
+        {/*  iconSize="w-4 h-4"*/}
+        {/*/>*/}
       </div>
     </div>
   );
 };
 
-export default ProfileLinks;
+export default ArtistProfileLinks;
 //
 // import React, { useState } from 'react';
 // import IconLink from '../common/IconLink';

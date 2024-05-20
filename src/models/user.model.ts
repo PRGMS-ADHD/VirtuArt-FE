@@ -21,11 +21,11 @@ export interface SignUpData {
   password: string;
 }
 
-export interface UserData {
+export interface User {
   username: string;
   email: string;
   id: string;
   intro: string;
-  profile_image: string | null;
-  cover_image: string | null;
+  profile_image: string;
+  cover_image: string;
 }
