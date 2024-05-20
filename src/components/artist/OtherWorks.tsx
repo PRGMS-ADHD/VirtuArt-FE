@@ -5,7 +5,7 @@ import { ArtistModel } from '@/models/artist.model';
 // import LikesButton from '@/components/image/LikesButton';
 import { fetchAllArtWorks } from '@/api/images.api';
 import { ArtworkModel } from '@/models/artwork.model';
-import ImageTooltip from '@/components/gallery/ImageTooltip.tsx';
+import ImageTooltip from '@/components/gallery/ImageTooltip';
 
 interface FetchAndDisplayGridProps {
   errorImage: string;
@@ -78,6 +78,7 @@ const OtherWorks: React.FC<FetchAndDisplayGridProps> = ({
 
   const handleArtistClick = (artWorkId: string) => {
     navigate(`/artworks/${artWorkId}`);
+    window.scrollTo(0, 0);
   };
 
   const handleMouseEnter = (id: string) => {

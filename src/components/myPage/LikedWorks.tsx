@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import LoadMoreButton from '@/components/common/LoadMoreButton';
 import { ArtworkModel } from '@/models/artwork.model';
 import errorImage from '../../../public/errorImage/artErrorImg.jpg';
+import ImageTooltip from '@/components/gallery/ImageTooltip';
 
 interface LikedWorksProps {
   works: ArtworkModel[];
@@ -11,6 +12,8 @@ interface LikedWorksProps {
 const LikedWorks: React.FC<LikedWorksProps> = ({ works }) => {
   const [visibleItems, setVisibleItems] = useState(8);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [hoveredImageId, setHoveredImageId] = useState<string | null>(null);
+  const [showTooltip, setShowTooltip] = useState(false);
   const navigate = useNavigate();
 
   const handleLoadMore = useCallback(() => {
@@ -36,6 +39,17 @@ const LikedWorks: React.FC<LikedWorksProps> = ({ works }) => {
     [works, visibleItems],
   );
 
+  const handleMouseEnter = (id: string) => {
+    setShowTooltip(true);
+    setHoveredImageId(id);
+  };
+
+  const handleMouseLeave = () => {
+    setShowTooltip(false);
+  };
+
+  console.log(works);
+
   return (
     <div className="my-6 flex flex-col items-center justify-center px-8">
       <div className="border-b border-customGray6">
@@ -47,6 +61,8 @@ const LikedWorks: React.FC<LikedWorksProps> = ({ works }) => {
                 key={work._id}
                 className="relative cursor-pointer"
                 onClick={() => handleWorkClick(work._id)}
+                onMouseEnter={() => handleMouseEnter(work._id)}
+                onMouseLeave={handleMouseLeave}
               >
                 <img
                   src={work.image ? work.image : errorImage}
@@ -54,6 +70,9 @@ const LikedWorks: React.FC<LikedWorksProps> = ({ works }) => {
                   className="object-cover transition-all duration-700"
                   style={{ width: '20vw', height: '20vh' }}
                 />
+                {showTooltip && hoveredImageId === work._id && (
+                  <ImageTooltip title={work.name} artist={work.artist} />
+                )}
               </div>
             ))}
           </div>

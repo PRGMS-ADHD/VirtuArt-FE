@@ -58,11 +58,11 @@ const useLikeButton = (id: string | undefined) => {
         return toggleResult; // 좋아요 상태를 토글한 결과를 반환
       } catch (error) {
         console.error('Failed to update like status:', error);
-        return false;
+        return null; // 로그인 상태에서만 좋아요 수를 변경하므로, 에러 발생 시 null을 반환
       }
     } else {
       alert('로그인이 필요합니다.');
-      return false;
+      return null; // 로그인하지 않은 상태에서는 null을 반환
     }
   };
 
