@@ -62,5 +62,5 @@ export const requestHandler = async <T>(
 
 // 추가: 아티스트 데이터를 가져오는 함수
 export const fetchArtists = async () => {
-  return await requestHandler('get', '/artist/all');
+  return await requestHandler<null>('get', '/artist/all');
 };
