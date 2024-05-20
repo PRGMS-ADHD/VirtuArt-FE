@@ -11,7 +11,7 @@ const Gallery = () => {
         className="font my-2 text-2xl font-medium"
         style={{ fontFamily: 'Helvetica Neue' }}
       >
-        Hear the stories beyond the canvas!
+        Hear the Stories Beyond the Canvas!
       </motion.h1>
       <motion.p
         initial={{ opacity: 0, x: -100 }}
