@@ -44,15 +44,18 @@ const Artist: React.FC = () => {
 
   const handleLikeButtonClick = async () => {
     const toggleResult = await handleLikeStatusChange();
-    setArtist((prev) => {
-      if (prev) {
-        return {
-          ...prev,
-          likes: toggleResult ? prev.likes + 1 : prev.likes - 1,
-        };
-      }
-      return prev;
-    });
+    if (toggleResult !== null) {
+      // toggleResult가 null이 아닌 경우에만 좋아요 수를 변경
+      setArtist((prev) => {
+        if (prev) {
+          return {
+            ...prev,
+            likes: toggleResult ? prev.likes + 1 : prev.likes - 1,
+          };
+        }
+        return prev;
+      });
+    }
   };
 
   return (
