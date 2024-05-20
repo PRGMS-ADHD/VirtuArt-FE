@@ -26,8 +26,8 @@ const ArtistsInfo: React.FC<ArtistsInfoProps> = ({ artists, categoryId }) => {
   };
 
   return (
-    <div className="relative flex w-full items-center justify-center px-4 py-5">
-      <div className="relative grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-3 md:grid-rows-1 md:flex-row lg:grid-cols-6">
+    <div className="relative flex w-full items-center justify-center px-14 py-5">
+      <div className="relative grid grid-cols-2 gap-1.5 sm:grid-cols-3 md:grid-cols-3 md:grid-rows-1 md:flex-row lg:grid-cols-6">
         <div className="col-span-full font-noto-sans-kr text-[20px] font-medium leading-[29px]">
           {categoryNames[categoryId]}
         </div>
@@ -63,7 +63,7 @@ const ArtistsInfo: React.FC<ArtistsInfoProps> = ({ artists, categoryId }) => {
       </div>
       <button
         onClick={handleNext}
-        className="bottom-50 absolute right-[-1px] flex h-[40px] w-[40px] items-center justify-center rounded-full bg-white shadow-md transition-transform duration-500 ease-in-out hover:scale-110"
+        className="absolute right-[38px] flex h-[40px] w-[40px] items-center justify-center rounded-full bg-white shadow-md transition-transform duration-500 ease-in-out hover:scale-110"
         type="button"
       >
         <MdNavigateNext className="text-lg" />

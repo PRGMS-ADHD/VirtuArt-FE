@@ -42,7 +42,7 @@ const Artists = () => {
         className="my-2 font-medium"
         style={{
           fontFamily: 'Helvetica Neue',
-          fontSize: 'clamp(24px, 5vw, 40px)',
+          fontSize: 'clamp(24px, 5vw, 20px)',
         }}
       >
         Meet the Artists Behind the Canvas!
@@ -54,7 +54,7 @@ const Artists = () => {
         className="mb-8 font-extralight"
         style={{
           fontFamily: 'Noto Sans KR',
-          fontSize: 'clamp(12px, 5vw, 20px)',
+          fontSize: 'clamp(12px, 5vw, 13px)',
         }}
       >
         창작의 매력에 빠져보세요! 여러분을 기다리는 아티스트들이 있습니다.
