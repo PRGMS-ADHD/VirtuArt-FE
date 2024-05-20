@@ -57,7 +57,7 @@ function Header() {
         }}
       >
         <img
-          src="../../../assets/logo.png"
+          src="../../../public/icon/logo.png"
           alt="logo"
           width="70"
           height="70"

@@ -36,16 +36,6 @@ export const fetchUserLikedArtists = async (token: string): Promise<any> => {
   }
 };
 
-// export const fetchUserLikes = async (email: string) => {
-//   try {
-//     const response = await httpClient.get(`/likes/user/${email}`);
-//     return response.data;
-//   } catch (error) {
-//     console.error('Error fetching user likes:', error);
-//     throw error;
-//   }
-// };
-
 export const fetchArtistLikers = async (id: string) => {
   try {
     const response = await httpClient.get(`/likes/artist/${id}/collectors`);
@@ -56,15 +46,6 @@ export const fetchArtistLikers = async (id: string) => {
   }
 };
 
-// export const fetchArtworkLikers = async (id: string): Promise<any> => {
-//   try {
-//     const response = await httpClient.get(`/likes/artwork/${id}/collectors`);
-//     return response.data;
-//   } catch (error) {
-//     console.error('Error fetching artwork likers:', error);
-//     throw error;
-//   }
-// };
 export const fetchUserLikedArtworks = async (token: string): Promise<any> => {
   try {
     const response = await httpClient.get(`/likes/user/artworks`, {
@@ -72,7 +53,6 @@ export const fetchUserLikedArtworks = async (token: string): Promise<any> => {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error('Error fetching user liked artworks:', error);

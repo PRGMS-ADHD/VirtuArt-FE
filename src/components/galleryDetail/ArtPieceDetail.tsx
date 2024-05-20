@@ -7,6 +7,7 @@ import HorizonProfileCard from '@/components/profile/HorizonProfileCard';
 import { fetchArtistById, fetchArtWorksById } from '@/api/images.api';
 import { ArtworkModel } from '@/models/artwork.model';
 import { ArtistModel } from '@/models/artist.model';
+import Tags from '@/components/gallery/Tags';
 import logo from '../../../assets/logo.png';
 
 const ArtPieceDetail = () => {
@@ -14,7 +15,7 @@ const ArtPieceDetail = () => {
   const [artWork, setArtWork] = useState<ArtworkModel | null>(null);
 
   const [selectedTab, setSelectedTab] = useState<'description' | 'info'>(
-    'description',
+    'info',
   );
   const [artist, setArtist] = useState<ArtistModel | null>(null);
   //
@@ -102,17 +103,6 @@ const ArtPieceDetail = () => {
               <button
                 type="button"
                 className={`flex-1 px-4 pb-2 focus:outline-none ${
-                  selectedTab === 'description'
-                    ? 'border-b-4 border-black font-semibold'
-                    : 'border-b-4 border-transparent'
-                }`}
-                onClick={() => handleTabClick('description')}
-              >
-                DESCRIPTION
-              </button>
-              <button
-                type="button"
-                className={`flex-1 px-4 pb-2 focus:outline-none ${
                   selectedTab === 'info'
                     ? 'border-b-4 border-black font-semibold'
                     : 'border-b-4 border-transparent'
@@ -121,14 +111,30 @@ const ArtPieceDetail = () => {
               >
                 INFO
               </button>
+              <button
+                type="button"
+                className={`flex-1 px-4 pb-2 focus:outline-none ${
+                  selectedTab === 'description'
+                    ? 'border-b-4 border-black font-semibold'
+                    : 'border-b-4 border-transparent'
+                }`}
+                onClick={() => handleTabClick('description')}
+              >
+                DESCRIPTION
+              </button>
             </div>
           </div>
 
-          <div className="mx-8 max-h-[36rem] w-full overflow-y-auto border border-t-4 p-4 xl:w-[37.5rem]">
+          <div className="mx-8 h-[36rem] max-h-[36rem] w-full overflow-y-auto border border-t-4 p-4 xl:w-[37.5rem]">
             {selectedTab === 'description' ? (
               <p>{artWork.description}</p>
             ) : (
-              <p>{artWork.tags}</p>
+              <div className="flex h-full flex-col items-center justify-center">
+                <p className="text-center">{artWork.intro}</p>
+                <p className="text-center">
+                  <Tags />
+                </p>
+              </div>
             )}
           </div>
         </div>
@@ -143,7 +149,6 @@ const ArtPieceDetail = () => {
         </HorizonProfileCard>
       </div>
       <OtherWorks artist={artist} errorImage={logo} />{' '}
-      {/* 다른 작품 TODO 지금 아티스트로 되어있음 그림으로 수정할것 */}
       <Collectors artistId={artWork.artist_id} />
     </div>
   );

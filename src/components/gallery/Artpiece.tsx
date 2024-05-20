@@ -4,9 +4,10 @@ import { Link } from 'react-router-dom';
 import { ArtPieceCategory } from '@/data/artPieceCategories';
 import { fetchAllArtWorks } from '@/api/images.api';
 import { ArtworkModel } from '@/models/artwork.model';
+import { useAuthStore } from '@/store/authStore';
 import LikesButton from '../image/LikesButton';
 import ImageTooltip from './ImageTooltip';
-import { apiToggleLike } from '../../api/likes.api';
+import { apiToggleLike, fetchUserLikedArtworks } from '../../api/likes.api';
 
 interface ArtpieceProps {
   category: {
@@ -19,12 +20,17 @@ const Artpiece: React.FC<ArtpieceProps> = ({ category }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [hoveredImageId, setHoveredImageId] = useState<string | null>(null);
   const [showTooltip, setShowTooltip] = useState(false);
-  const [likedArtWorks, setLikedArtWorks] = useState<{
-    [key: string]: boolean;
-  }>({});
+  const [likedArtWorks, setLikedArtWorks] = useState<string[]>([]);
   const [artWorks, setArtWorks] = useState<ArtworkModel[]>([]);
-
   const token = localStorage.getItem('token');
+
+  const { isLoggedOut } = useAuthStore(); // 로그아웃 상태
+
+  useEffect(() => {
+    if (isLoggedOut) {
+      setLikedArtWorks([]); // 로그아웃 상태가 true이면 좋아요 상태를 초기화
+    }
+  }, [isLoggedOut]);
 
   useEffect(() => {
     const fetchArtPieces = async () => {
@@ -35,11 +41,25 @@ const Artpiece: React.FC<ArtpieceProps> = ({ category }) => {
     fetchArtPieces();
   }, []);
 
+  useEffect(() => {
+    const fetchLikedArtworks = async () => {
+      if (token) {
+        try {
+          const likedArtworks = await fetchUserLikedArtworks(token);
+          setLikedArtWorks(
+            likedArtworks.map((artwork: ArtworkModel) => artwork._id),
+          ); // 모델 확인
+        } catch (error) {
+          console.error('Error fetching liked artworks:', error);
+        }
+      }
+    };
+    fetchLikedArtworks();
+  }, [token]);
+
   const filteredArtWorks = artWorks.filter(
     (artWork) => artWork.category === category.id.toString(),
   );
-
-  console.log(filteredArtWorks, 'filteredArtWorks');
 
   const handleNext = () => {
     setCurrentIndex((currentIndex + 1) % filteredArtWorks.length);
@@ -55,12 +75,19 @@ const Artpiece: React.FC<ArtpieceProps> = ({ category }) => {
   };
 
   const handleLikeStatusChange = async (id: string) => {
+    if (!token) {
+      alert('로그인이 필요합니다.');
+      return;
+    }
     try {
-      const updatedLikeStatus = await apiToggleLike(token, 'artWork', id);
-      setLikedArtWorks((prevState) => ({
-        ...prevState,
-        [id]: updatedLikeStatus,
-      }));
+      const updatedLikeStatus = await apiToggleLike(token, 'artwork', id);
+      if (updatedLikeStatus) {
+        setLikedArtWorks((prevState) => [...prevState, id]);
+      } else {
+        setLikedArtWorks((prevState) =>
+          prevState.filter((artworkId) => artworkId !== id),
+        );
+      }
     } catch (error) {
       console.error('Failed to update like status:', error);
     }
@@ -71,9 +98,9 @@ const Artpiece: React.FC<ArtpieceProps> = ({ category }) => {
 
   const bgClass = isEvenCategory ? 'bg-gray-100' : '';
 
-  // if (filteredArtWorks.length === 0) {
-  //   return null;
-  // }
+  if (filteredArtWorks.length === 0) {
+    return null;
+  }
 
   return (
     <div
@@ -111,16 +138,10 @@ const Artpiece: React.FC<ArtpieceProps> = ({ category }) => {
                   </div>
                 </Link>
                 <div className="absolute right-0 top-0 p-3 px-4">
-                  {/*<LikesButton*/}
-                  {/*  targetType="artWork"*/}
-                  {/*  targetId={artWork._id.toString()}*/}
-                  {/*  initialLiked={isLiked(artWork._id.toString())}*/}
-                  {/*  token={token}*/}
-                  {/*/>*/}
                   <LikesButton
-                    targetType="artWork"
+                    targetType="artwork"
                     targetId={artWork._id.toString()}
-                    initialLiked={likedArtWorks[artWork._id]}
+                    initialLiked={likedArtWorks.includes(artWork._id)}
                     token={token}
                     onLikeStatusChange={() =>
                       handleLikeStatusChange(artWork._id)

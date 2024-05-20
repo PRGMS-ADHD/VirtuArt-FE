@@ -20,3 +20,12 @@ export interface SignUpData {
   email: string;
   password: string;
 }
+
+export interface User {
+  username: string;
+  email: string;
+  id: string;
+  intro: string;
+  profile_image: string;
+  cover_image: string;
+}

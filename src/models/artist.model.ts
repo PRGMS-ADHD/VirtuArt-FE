@@ -10,4 +10,5 @@ export interface ArtistModel {
   cover_image: string;
   profile_image: string;
   __v: number;
+  category: string;
 }

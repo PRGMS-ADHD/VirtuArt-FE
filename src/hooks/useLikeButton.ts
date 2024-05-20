@@ -44,23 +44,6 @@ const useLikeButton = (id: string | undefined) => {
     fetchLikes();
   }, [token, id]);
 
-  // useEffect(() => {
-  //   const fetchLikes = async () => {
-  //     const userEmail = getUserDetailsFromToken();
-  //     if (userEmail) {
-  //       try {
-  //         const likedArtistsData = await fetchUserLikedArtists(token);
-  //         const likedArtistsIds = likedArtistsData.map((artist) => artist._id);
-  //         setLikedArtists(likedArtistsIds);
-  //       } catch (error) {
-  //         console.error('Error fetching liked artists:', error);
-  //       }
-  //     }
-  //   };
-  //
-  //   fetchLikes();
-  // }, [token, id]);
-
   const handleLikeStatusChange = async () => {
     const userEmail = getUserDetailsFromToken();
     if (userEmail && id) {

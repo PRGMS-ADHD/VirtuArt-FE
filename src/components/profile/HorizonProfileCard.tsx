@@ -2,6 +2,7 @@ import React, { ReactNode } from 'react';
 import { ArtistModel } from '@/models/artist.model';
 // import ProfileTextArea from './ProfileTextArea';
 import logo from '../../../assets/logo.png';
+import { Link } from 'react-router-dom';
 
 interface HorizonProfileProps {
   children?: ReactNode;
@@ -21,11 +22,15 @@ const HorizonProfileCard: React.FC<HorizonProfileProps> = ({
         <p className="absolute -left-1 -top-9 font-helveticaNeue text-xl">
           ARTIST
         </p>
-        <img
-          src={artist.profile_image || logo}
-          alt="logo"
-          className="h-28 w-28 rounded-full stroke-1 object-cover shadow-profile-shadow"
-        />
+        <Link to={`/artists/${artist._id}`}>
+          {' '}
+          {/* 이미지를 Link 컴포넌트로 감쌉니다. */}
+          <img
+            src={artist.profile_image || logo}
+            alt="logo"
+            className="h-28 w-28 rounded-full stroke-1 object-cover shadow-profile-shadow"
+          />
+        </Link>
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <p className="ml-4 font-noto-sans-kr text-3xl font-normal leading-normal text-black">

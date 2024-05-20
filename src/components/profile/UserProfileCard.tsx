@@ -16,20 +16,12 @@ import {
   fetchCoverImage,
   uploadCoverImage,
 } from '@/api/user.api';
+import { User } from '@/models/user.model';
 import ProfileLinks from './ProfileLinks';
 import ProfileTextArea from './ProfileTextArea';
 import ProfilePicture from './ProfilePicture';
 import logo from '../../../assets/logo.png';
 import image from '../../../assets/image1.jpeg';
-
-interface User {
-  username: string;
-  email: string;
-  id: string;
-  intro: string;
-  profile_image: string;
-  cover_image: string;
-}
 
 interface UserProfileCardProps {
   children?: ReactNode;
@@ -130,12 +122,12 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({ children }) => {
 
         try {
           const data = await getUserInfo(email);
-          const profileImageUrl = await fetchProfileImage(email);
-          const coverImageUrl = await fetchCoverImage(email);
+          // const profileImageUrl = await fetchProfileImage(email);
+          // const coverImageUrl = await fetchCoverImage(email);
           setUser({
             ...data,
-            profile_image: profileImageUrl,
-            cover_image: coverImageUrl,
+            // profile_image: profileImageUrl,
+            // cover_image: coverImageUrl,
           });
           // setUser(data);
         } catch (error) {
@@ -242,7 +234,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({ children }) => {
             {children}
           </div>
         </div>
-        <ProfileLinks />
+        <ProfileLinks user={user} />
         <div className="flex flex-1 items-center justify-center">
           {isEditing ? (
             <ProfileTextArea
