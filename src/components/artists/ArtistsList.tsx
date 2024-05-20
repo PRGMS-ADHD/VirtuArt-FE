@@ -1,6 +1,17 @@
+import { ArtistModel } from '@/models/artist.model';
 import ArtistsInfo from './ArtistsInfo';
 
-const ArtistsList = ({ artists, categories }) => {
+interface ArtistsListProps {
+  artists: ArtistModel[];
+  categories: Category[];
+}
+
+export interface Category {
+  id: string;
+  name: string;
+}
+
+const ArtistsList = ({ artists, categories }: ArtistsListProps) => {
   return (
     <div className="flex w-screen flex-col items-center">
       {categories.map((category, index) => {
@@ -12,7 +23,7 @@ const ArtistsList = ({ artists, categories }) => {
                 artists={artists.filter(
                   (artist) => artist.category === category.id,
                 )}
-                categoryId={category.id}
+                categoryId={Number(category.id)}
               />
             </div>
           </div>
@@ -21,5 +32,4 @@ const ArtistsList = ({ artists, categories }) => {
     </div>
   );
 };
-
 export default ArtistsList;
