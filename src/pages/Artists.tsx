@@ -4,8 +4,6 @@ import { ArtistModel } from '@/models/artist.model';
 import ArtistsList, { Category } from '../components/artists/ArtistsList';
 import { fetchArtists } from '../api/http';
 
-// Artist와 Category 타입 정의
-
 const Artists = () => {
   const [artists, setArtists] = useState<ArtistModel[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -17,15 +15,14 @@ const Artists = () => {
         setArtists(data);
 
         const uniqueCategories = Array.from(
-          new Set(data.map((artist) => artist.category)),
+          new Set<string>(data.map((artist: ArtistModel) => artist.category)),
         );
         setCategories(
-          uniqueCategories.map((category) => ({
+          uniqueCategories.map((category: string) => ({
             id: category,
             name: category,
           })),
         );
-        
       } catch (error) {
         console.error('Error fetching artists:', error);
       }
