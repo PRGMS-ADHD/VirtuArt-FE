@@ -1,31 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { fetchArtists } from '../api/http'; // 수정된 부분
-import ArtistsList from '../components/artists/ArtistsList';
+import axios from 'axios';
+import { ArtistModel } from '@/models/artist.model';
+import ArtistsList, { Category } from '../components/artists/ArtistsList';
 
-interface Artist {
-  id: string;
-  name: string;
-  category: string;
-}
-
-interface Category {
-  id: string;
-  name: string;
-}
+// Artist와 Category 타입 정의
 
 const Artists = () => {
-  const [artists, setArtists] = useState<Artist[]>([]);
+  const [artists, setArtists] = useState<ArtistModel[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
 
   useEffect(() => {
-    const fetchArtistsData = async () => {
+    const fetchArtists = async () => {
       try {
-        const artistsData = await fetchArtists();
-        setArtists(artistsData);
+        const response = await axios.get<ArtistModel[]>(
+          'http://localhost:3000/artist/all',
+        );
+        setArtists(response.data);
 
         const uniqueCategories = Array.from(
-          new Set(artistsData.map((artist) => artist.category)),
+          new Set(response.data.map((artist) => artist.category)),
         );
         setCategories(
           uniqueCategories.map((category) => ({
@@ -37,11 +31,11 @@ const Artists = () => {
         console.error('Error fetching artists:', error);
       }
     };
-    fetchArtistsData();
+    fetchArtists();
   }, []);
 
   return (
-    <div className="my-7 flex flex-col items-center">
+    <div className="my-8 flex flex-col items-center">
       <motion.h1
         initial={{ opacity: 0, x: -100 }}
         animate={{ opacity: 1, x: 0 }}
@@ -49,7 +43,7 @@ const Artists = () => {
         className="my-2 font-medium"
         style={{
           fontFamily: 'Helvetica Neue',
-          fontSize: 'clamp(24px, 5vw, 20px)',
+          fontSize: 'clamp(24px, 5vw, 40px)',
         }}
       >
         Meet the Artists Behind the Canvas!
@@ -58,10 +52,10 @@ const Artists = () => {
         initial={{ opacity: 0, x: -100 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 2, delay: 0.4 }}
-        className="mb-7 font-extralight"
+        className="mb-8 font-extralight"
         style={{
           fontFamily: 'Noto Sans KR',
-          fontSize: 'clamp(12px, 5vw, 10px)',
+          fontSize: 'clamp(12px, 5vw, 20px)',
         }}
       >
         창작의 매력에 빠져보세요! 여러분을 기다리는 아티스트들이 있습니다.
@@ -70,5 +64,4 @@ const Artists = () => {
     </div>
   );
 };
-
 export default Artists;
