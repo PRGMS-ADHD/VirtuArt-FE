@@ -1,7 +1,6 @@
 import { httpClient } from './http';
 import { ArtistModel } from '../models/artist.model';
 
-
 export const fetchArtists = async (): Promise<ArtistModel[]> => {
   try {
     const response = await httpClient.get<ArtistModel[]>('/artist/all');
@@ -37,6 +36,16 @@ export const fetchAllArtWorks = async () => {
 export const fetchArtWorksById = async (id: string = '') => {
   try {
     const response = await httpClient.get(`/artwork/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw new Error('Failed to load');
+  }
+};
+
+export const fetchArtWorksByArtist = async (artistId: string = '') => {
+  try {
+    const response = await httpClient.get(`/artwork/by-artist/${artistId}`);
     return response.data;
   } catch (error) {
     console.error(error);
