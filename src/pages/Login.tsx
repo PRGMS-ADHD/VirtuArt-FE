@@ -74,7 +74,7 @@ function Login() {
                 {errors.password?.message || 'Placeholder'}
               </p>
               <Link
-                to="/"
+                to="/join"
                 className="ml-auto mr-2 mt-2 font-helvetica text-xs text-customGray2"
               >
                 FORGOT PASSWORD?
@@ -88,7 +88,7 @@ function Login() {
             <p className="mr-5 font-helvetica text-customGray4">
               Don&#39;t have an account?
             </p>
-            <Link to="/signup" className="font-helvetica text-customGray2">
+            <Link to="/join" className="font-helvetica text-customGray2">
               SIGN UP
             </Link>
           </div>
