@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LoadMoreButton from '@/components/common/LoadMoreButton';
 import { ArtistModel } from '@/models/artist.model';
-import { fetchAllArtWorks } from '@/api/images.api';
+import { fetchArtWorksByArtist } from '@/api/images.api';
 import { ArtworkModel } from '@/models/artwork.model';
 import ImageTooltip from '@/components/gallery/ImageTooltip';
-// import LikesCountButton from '@/components/common/LikesCountButton';
 import useLikeButtonArtWork from '@/hooks/useLikeButtonArtWork';
 import LikesButton from '@/components/image/LikesButton';
 import { useAuthStore } from '@/store/authStore';
@@ -14,6 +13,7 @@ interface FetchAndDisplayGridProps {
   errorImage: string;
   className?: string;
   artist: ArtistModel | null;
+  id: string | undefined;
 }
 
 interface OtherArtWorkItemProps {
@@ -78,6 +78,7 @@ const OtherWorks: React.FC<FetchAndDisplayGridProps> = ({
   errorImage,
   className,
   artist,
+  id,
 }) => {
   const [artworks, setArtWorks] = useState<ArtworkModel[]>([]);
   const [visibleItems, setVisibleItems] = useState(8);
@@ -90,12 +91,12 @@ const OtherWorks: React.FC<FetchAndDisplayGridProps> = ({
   useEffect(() => {
     const getArtWorks = async () => {
       try {
-        const allArtworks = await fetchAllArtWorks();
-        if (artist) {
-          const artistArtworks = allArtworks.filter(
-            (artwork: ArtworkModel) => artwork.artist_id === artist._id,
+        if (artist && artist._id) {
+          const artistArtworks = await fetchArtWorksByArtist(artist._id);
+          const filteredArtworks = artistArtworks.filter(
+            (artwork: ArtworkModel) => artwork._id !== id,
           );
-          setArtWorks(artistArtworks);
+          setArtWorks(filteredArtworks);
         }
       } catch (error) {
         console.error('Failed to fetch artworks:', error);
@@ -105,7 +106,7 @@ const OtherWorks: React.FC<FetchAndDisplayGridProps> = ({
     if (artist && artist._id) {
       getArtWorks();
     }
-  }, [artist]);
+  }, [artist, id]);
 
   useEffect(() => {
     const handleResize = () => {
