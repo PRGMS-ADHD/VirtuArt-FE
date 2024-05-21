@@ -36,7 +36,7 @@ function NavLinks() {
         </li>
         {!isLoggedIn && (
           <li>
-            <Link to="/signup">JOIN</Link>
+            <Link to="/join">JOIN</Link>
           </li>
         )}
       </ul>
