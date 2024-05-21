@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LoadMoreButton from '@/components/common/LoadMoreButton';
-import { fetchAllArtWorks } from '@/api/images.api';
+import { fetchArtWorksByArtist } from '@/api/images.api';
 import { ArtworkModel } from '@/models/artwork.model';
 import ImageTooltip from '@/components/gallery/ImageTooltip';
 import LikesButton from '@/components/image/LikesButton';
@@ -88,11 +88,8 @@ const ArtWorks: React.FC<FetchAndDisplayGridProps> = ({
   useEffect(() => {
     const getArtWorks = async () => {
       try {
-        const allArtworks = await fetchAllArtWorks();
         if (artistId) {
-          const artistArtworks = allArtworks.filter(
-            (artwork: ArtworkModel) => artwork.artist_id === artistId,
-          );
+          const artistArtworks = await fetchArtWorksByArtist(artistId);
           setArtWorks(artistArtworks);
         }
       } catch (error) {

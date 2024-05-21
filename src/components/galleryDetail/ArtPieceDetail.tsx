@@ -179,7 +179,7 @@ const ArtPieceDetail = () => {
           )}
         </HorizonProfileCard>
       </div>
-      <OtherWorks artist={artist} errorImage={logo} />{' '}
+      <OtherWorks artist={artist} errorImage={logo} id={id} />{' '}
       <Collectors artistId={artWork.artist_id} />
     </div>
   );
