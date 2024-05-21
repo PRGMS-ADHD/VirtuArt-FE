@@ -68,7 +68,7 @@ const Artist: React.FC = () => {
         />
       </ArtistProfileCard>
       <div>
-        <ArtWorks errorImage={logo} />
+        <ArtWorks artistId={id} errorImage={logo} />
         <Collectors artistId={id} />
       </div>
     </div>
