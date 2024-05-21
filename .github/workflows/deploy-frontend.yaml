@@ -35,12 +35,17 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Add server to known_hosts
+        run: ssh-keyscan ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Change directory permissions
         run: |
-          ssh-keyscan ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }} << 'EOF'
+            sudo chown -R ${{ secrets.SSH_USERNAME }}:${{ secrets.SSH_USERNAME }} /home/${{ secrets.SSH_USERNAME }}/VirtuArt-FE
+            sudo chmod -R 755 /home/${{ secrets.SSH_USERNAME }}/VirtuArt-FE
+          EOF
 
       - name: Copy files to server
-        run: |
-          scp -r dist/* ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:/home/ubuntu/VirtuArt-FE/dist
+        run: scp -r dist/* ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:/home/${{ secrets.SSH_USERNAME }}/VirtuArt-FE/dist
 
       - name: Restart Nginx
         run: |
