@@ -15,7 +15,7 @@ function NavLinks() {
     <nav>
       <ul className="flex flex-col space-y-8 pl-8 font-helvetica font-light xl:flex-row xl:space-x-10 xl:space-y-0">
         <li>
-          <Link to="/">GALLERY</Link>
+          <Link to="/gallery">GALLERY</Link>
         </li>
         <li>
           <Link to="/artists">ARTISTS</Link>
