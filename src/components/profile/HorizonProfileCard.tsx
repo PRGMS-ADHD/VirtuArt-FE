@@ -1,8 +1,9 @@
 import React, { ReactNode } from 'react';
 import { ArtistModel } from '@/models/artist.model';
 // import ProfileTextArea from './ProfileTextArea';
-import logo from '../../../assets/logo.png';
 import { Link } from 'react-router-dom';
+import ProfileTextArea from '@/components/profile/ProfileTextArea';
+import logo from '../../../assets/logo.png';
 
 interface HorizonProfileProps {
   children?: ReactNode;
@@ -43,7 +44,7 @@ const HorizonProfileCard: React.FC<HorizonProfileProps> = ({
           <div className="mr-3 flex gap-x-4">{children}</div>
         </div>
         <div className="hidden lg:block">
-          {/* TODO <ProfileTextArea text={artist.intro} />*/}
+          <ProfileTextArea text={artist.intro} onChange={() => {}} />
         </div>
       </div>
     </div>

@@ -33,29 +33,54 @@ const Artpiece: React.FC<ArtpieceProps> = ({ category }) => {
   }, [isLoggedOut]);
 
   useEffect(() => {
-    const fetchArtPieces = async () => {
-      const data = await fetchAllArtWorks(); // fetchAllArtWorks 함수를 호출하여 작품 데이터를 가져옴
-      setArtWorks(data); // 가져온 데이터를 상태로 설정
-    };
-
-    fetchArtPieces();
-  }, []);
-
-  useEffect(() => {
-    const fetchLikedArtworks = async () => {
+    const fetchData = async () => {
       if (token) {
         try {
-          const likedArtworks = await fetchUserLikedArtworks(token);
+          const [likedArtworks, allArtWorks] = await Promise.all([
+            fetchUserLikedArtworks(token),
+            fetchAllArtWorks(),
+          ]);
+
           setLikedArtWorks(
             likedArtworks.map((artwork: ArtworkModel) => artwork._id),
-          ); // 모델 확인
+          );
+          setArtWorks(allArtWorks);
         } catch (error) {
-          console.error('Error fetching liked artworks:', error);
+          console.error('Error fetching data:', error);
         }
+      } else {
+        const allArtWorks = await fetchAllArtWorks();
+        setArtWorks(allArtWorks);
       }
     };
-    fetchLikedArtworks();
+
+    fetchData();
   }, [token]);
+
+  // useEffect(() => {
+  //   const fetchArtPieces = async () => {
+  //     const data = await fetchAllArtWorks(); // fetchAllArtWorks 함수를 호출하여 작품 데이터를 가져옴
+  //     setArtWorks(data); // 가져온 데이터를 상태로 설정
+  //   };
+  //
+  //   fetchArtPieces();
+  // }, []);
+  //
+  // useEffect(() => {
+  //   const fetchLikedArtworks = async () => {
+  //     if (token) {
+  //       try {
+  //         const likedArtworks = await fetchUserLikedArtworks(token);
+  //         setLikedArtWorks(
+  //           likedArtworks.map((artwork: ArtworkModel) => artwork._id),
+  //         ); // 모델 확인
+  //       } catch (error) {
+  //         console.error('Error fetching liked artworks:', error);
+  //       }
+  //     }
+  //   };
+  //   fetchLikedArtworks();
+  // }, [token]);
 
   const filteredArtWorks = artWorks.filter(
     (artWork) => artWork.category === category.id.toString(),
@@ -104,7 +129,7 @@ const Artpiece: React.FC<ArtpieceProps> = ({ category }) => {
 
   return (
     <div
-      className={`relative w-full pb-16 pt-12 ${bgClass}`}
+      className={`w-full pb-16 pt-12 ${bgClass}`}
       style={{ width: '100vw' }}
     >
       <div className="flex justify-center">

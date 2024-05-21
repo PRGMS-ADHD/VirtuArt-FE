@@ -1,19 +1,9 @@
 import React, { ReactNode } from 'react';
 import { ArtistModel } from '@/models/artist.model';
-// import ProfileLinks from './ProfileLinks';
-// import ProfileTextArea from './ProfileTextArea';
 import ArtistProfileLinks from '@/components/profile/ArtistProfileLinks';
+import ProfileTextArea from '@/components/profile/ProfileTextArea';
 import ProfilePicture from './ProfilePicture';
 import image from '../../../assets/image3.jpeg';
-
-// export default ProfileCard;
-// interface ProfileCardProps {
-//   src: string;
-//   name: string;
-//   englishName: string;
-//   onLikeClick?: () => void;
-//   onSettingsClick?: () => void;
-// }
 
 interface ArtistProfileCardProps {
   children?: ReactNode;
@@ -24,6 +14,10 @@ const ArtistProfile: React.FC<ArtistProfileCardProps> = ({
   children,
   artist,
 }) => {
+  const handleTextChange = (text: string) => {
+    console.log(text);
+  }; // TODO: 임시 함수
+
   return (
     <div className="flex flex-col items-center justify-center">
       <img
@@ -49,7 +43,7 @@ const ArtistProfile: React.FC<ArtistProfileCardProps> = ({
         </div>
         <ArtistProfileLinks artist={artist} />
         <div className="flex flex-1 items-center justify-center">
-          {/*<ProfileTextArea text={artist.intro} />*/}
+          <ProfileTextArea text={artist.intro} onChange={handleTextChange} />
         </div>
       </div>
     </div>
