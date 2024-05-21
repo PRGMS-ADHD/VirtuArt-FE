@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MdNavigateNext } from 'react-icons/md';
+import { MdNavigateNext, MdNavigateBefore } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { ArtPieceCategory } from '@/data/artPieceCategories';
 import { fetchAllArtWorks } from '@/api/images.api';
@@ -33,54 +33,29 @@ const Artpiece: React.FC<ArtpieceProps> = ({ category }) => {
   }, [isLoggedOut]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (token) {
-        try {
-          const [likedArtworks, allArtWorks] = await Promise.all([
-            fetchUserLikedArtworks(token),
-            fetchAllArtWorks(),
-          ]);
-
-          setLikedArtWorks(
-            likedArtworks.map((artwork: ArtworkModel) => artwork._id),
-          );
-          setArtWorks(allArtWorks);
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      } else {
-        const allArtWorks = await fetchAllArtWorks();
-        setArtWorks(allArtWorks);
-      }
+    const fetchArtPieces = async () => {
+      const data = await fetchAllArtWorks(); // fetchAllArtWorks 함수를 호출하여 작품 데이터를 가져옴
+      setArtWorks(data); // 가져온 데이터를 상태로 설정
     };
 
-    fetchData();
-  }, [token]);
+    fetchArtPieces();
+  }, []);
 
-  // useEffect(() => {
-  //   const fetchArtPieces = async () => {
-  //     const data = await fetchAllArtWorks(); // fetchAllArtWorks 함수를 호출하여 작품 데이터를 가져옴
-  //     setArtWorks(data); // 가져온 데이터를 상태로 설정
-  //   };
-  //
-  //   fetchArtPieces();
-  // }, []);
-  //
-  // useEffect(() => {
-  //   const fetchLikedArtworks = async () => {
-  //     if (token) {
-  //       try {
-  //         const likedArtworks = await fetchUserLikedArtworks(token);
-  //         setLikedArtWorks(
-  //           likedArtworks.map((artwork: ArtworkModel) => artwork._id),
-  //         ); // 모델 확인
-  //       } catch (error) {
-  //         console.error('Error fetching liked artworks:', error);
-  //       }
-  //     }
-  //   };
-  //   fetchLikedArtworks();
-  // }, [token]);
+  useEffect(() => {
+    const fetchLikedArtworks = async () => {
+      if (token) {
+        try {
+          const likedArtworks = await fetchUserLikedArtworks(token);
+          setLikedArtWorks(
+            likedArtworks.map((artwork: ArtworkModel) => artwork._id),
+          ); // 모델 확인
+        } catch (error) {
+          console.error('Error fetching liked artworks:', error);
+        }
+      }
+    };
+    fetchLikedArtworks();
+  }, [token]);
 
   const filteredArtWorks = artWorks.filter(
     (artWork) => artWork.category === category.id.toString(),
@@ -88,6 +63,12 @@ const Artpiece: React.FC<ArtpieceProps> = ({ category }) => {
 
   const handleNext = () => {
     setCurrentIndex((currentIndex + 1) % filteredArtWorks.length);
+  };
+
+  const handlePrevious = () => {
+    setCurrentIndex(
+      (currentIndex - 1 + filteredArtWorks.length) % filteredArtWorks.length,
+    );
   };
 
   const handleMouseEnter = (id: string) => {
@@ -128,14 +109,11 @@ const Artpiece: React.FC<ArtpieceProps> = ({ category }) => {
   }
 
   return (
-    <div
-      className={`w-full pb-16 pt-12 ${bgClass}`}
-      style={{ width: '100vw' }}
-    >
-      <div className="flex justify-center">
-        <div className="relative grid grid-cols-4 gap-4">
+    <div className={`relative w-screen pb-12 pt-5 ${bgClass}`}>
+      <div className="container mx-auto px-1">
+        <div className="relative grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
           {/* 카테고리 제목을 고정된 위치에 배치 */}
-          <div className="col-span-4">
+          <div className="col-span-full mb-4">
             <h2 className="text-left font-noto-sans-kr text-xl font-medium">
               {category.name}
             </h2>
@@ -145,20 +123,16 @@ const Artpiece: React.FC<ArtpieceProps> = ({ category }) => {
             .map((artWork) => (
               <div
                 key={artWork._id}
-                style={{ position: 'relative' }}
+                className="relative overflow-hidden shadow-lg"
                 onMouseEnter={() => handleMouseEnter(artWork._id.toString())}
                 onMouseLeave={handleMouseLeave}
               >
                 <Link to={`/artworks/${artWork._id}`}>
-                  <div style={{ width: 376, height: 211, overflow: 'hidden' }}>
+                  <div className="h-52 w-full">
                     <img
                       src={artWork.image}
                       alt={artWork.name}
-                      style={{
-                        width: '100%',
-                        height: '100%',
-                        objectFit: 'cover',
-                      }}
+                      className="h-full w-full object-cover"
                     />
                   </div>
                 </Link>
@@ -178,16 +152,29 @@ const Artpiece: React.FC<ArtpieceProps> = ({ category }) => {
                 )}
               </div>
             ))}
-          {/* 버튼을 그리드 컨테이너의 오른쪽 끝에 고정 */}
+          {/* 이전 버튼 */}
+          <button
+            type="button"
+            onClick={handlePrevious}
+            className="absolute flex h-[40px] w-[40px] items-center justify-center rounded-full bg-white shadow-md transition-transform duration-500 ease-in-out hover:scale-110"
+            style={{
+              left: '-15px',
+              top: '56%',
+              transform: 'translateY(-50%)',
+            }}
+          >
+            <MdNavigateBefore className="text-lg" />
+          </button>
+          {/* 다음 버튼 */}
           <button
             type="button"
             onClick={handleNext}
             className="absolute flex h-[40px] w-[40px] items-center justify-center rounded-full bg-white shadow-md transition-transform duration-500 ease-in-out hover:scale-110"
             style={{
               right: '-15px',
-              top: '55%',
+              top: '56%',
               transform: 'translateY(-50%)',
-            }} // 위치 조정
+            }}
           >
             <MdNavigateNext className="text-lg" />
           </button>
