@@ -17,7 +17,7 @@ const ArtistsList = ({ artists, categories }: ArtistsListProps) => {
       {categories.map((category, index) => {
         const bgClass = index % 2 === 0 ? 'bg-gray-100' : '';
         return (
-          <div key={category.id} className={`p-4 ${bgClass} w-screen`}>
+          <div key={category.id} className={`p-3 ${bgClass} w-screen`}>
             <div className="container mx-auto px-16">
               <ArtistsInfo
                 artists={artists.filter(
