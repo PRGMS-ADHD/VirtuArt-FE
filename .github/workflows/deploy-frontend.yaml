@@ -21,7 +21,7 @@ jobs:
           node-version: '20.11.1'
 
       - name: Create .env.production file
-        run: echo "BASE_URL=${{ secrets.BASE_URL }}" >> .env
+        run: echo "VITE_BASE_URL=${{ secrets.BASE_URL }}" >> .env.production
 
       - name: Install dependencies
         run: npm install
