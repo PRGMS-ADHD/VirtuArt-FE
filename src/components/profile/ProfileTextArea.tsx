@@ -2,7 +2,7 @@ import React from 'react';
 
 interface ProfileTextAreaProps {
   text?: string;
-  onChange: (newText: string) => void;
+  onChange: (text: string) => void;
 }
 
 const ProfileTextArea: React.FC<ProfileTextAreaProps> = ({

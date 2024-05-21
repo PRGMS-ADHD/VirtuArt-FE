@@ -2,8 +2,8 @@ import React, { useState, useMemo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LoadMoreButton from '@/components/common/LoadMoreButton';
 import { ArtworkModel } from '@/models/artwork.model';
-import errorImage from '../../../public/errorImage/artErrorImg.jpg';
 import ImageTooltip from '@/components/gallery/ImageTooltip';
+import errorImage from '../../../public/errorImage/artErrorImg.jpg';
 
 interface LikedWorksProps {
   works: ArtworkModel[];
@@ -47,8 +47,6 @@ const LikedWorks: React.FC<LikedWorksProps> = ({ works }) => {
   const handleMouseLeave = () => {
     setShowTooltip(false);
   };
-
-  console.log(works);
 
   return (
     <div className="my-6 flex flex-col items-center justify-center px-8">

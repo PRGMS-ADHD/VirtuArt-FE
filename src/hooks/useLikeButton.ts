@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import { useAuthStore } from '@/store/authStore';
-import { apiToggleLike, fetchUserLikedArtists } from '../api/likes.api';
 import { ArtistModel } from '@/models/artist.model';
+import { apiToggleLike, fetchUserLikedArtists } from '../api/likes.api';
 
 interface DecodedToken {
   // TODO

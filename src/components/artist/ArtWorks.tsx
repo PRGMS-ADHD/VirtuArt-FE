@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import LoadMoreButton from '@/components/common/LoadMoreButton';
-import { ArtistModel } from '@/models/artist.model';
+// import { ArtistModel } from '@/models/artist.model';
 import { fetchAllArtWorks } from '@/api/images.api';
 import { ArtworkModel } from '@/models/artwork.model';
+
 // import LikesButton from '@/components/image/LikesButton';
 
 interface ArtWorksProps {
   errorImage: string;
   className?: string;
   // showLikesButton?: boolean; // 새로운 속성 추가
-  artist: ArtistModel | null;
+  // artist: ArtistModel | null;
 }
 
 const ArtWorks: React.FC<ArtWorksProps> = ({

@@ -218,7 +218,7 @@ import React from 'react';
 import { IoMdHeart } from 'react-icons/io';
 
 interface LikesCountButtonProps {
-  likes: number;
+  likes?: number;
   isLiked: boolean;
   onLikeStatusChange: () => void;
 }

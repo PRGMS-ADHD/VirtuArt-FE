@@ -42,6 +42,9 @@ import MyPage from './pages/MyPage';
 import Artist from './pages/Artist';
 import Error from './components/common/Error';
 import ArtPieceDetail from '@/components/galleryDetail/ArtPieceDetail';
+import { QueryClient, QueryClientProvider } from 'react-query';
+
+const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
@@ -68,7 +71,11 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
+  );
 }
 
 export default App;
