@@ -12,4 +12,7 @@ export default defineConfig({
       plugins: [tailwindcss(), autoprefixer()],
     },
   },
+  define: {
+    'process.env': process.env,
+  },
 });
