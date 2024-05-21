@@ -1,11 +1,8 @@
 import { useState, useEffect } from 'react';
-import { useMutation, useQueryClient } from 'react-query';
 import { jwtDecode } from 'jwt-decode';
 import { useAuthStore } from '@/store/authStore';
 import { ArtworkModel } from '@/models/artwork.model';
-import { useLikesStore } from '@/store/likesStore';
 import { apiToggleLike, fetchUserLikedArtworks } from '../api/likes.api';
-import debounce from 'lodash/debounce';
 
 interface DecodedToken {
   email: string;
@@ -13,12 +10,8 @@ interface DecodedToken {
 
 const useLikeButtonArtwork = (id: string | undefined) => {
   const { token } = useAuthStore();
-  const { likedArtworks, addLikedArtwork, removeLikedArtwork } =
-    useLikesStore();
   const [isLiked, setIsLiked] = useState<boolean>(false);
-  const [isRequesting, setIsRequesting] = useState(false);
-
-  const queryClient = useQueryClient();
+  const [likedArtworks, setLikedArtworks] = useState<string[]>([]);
 
   const getUserDetailsFromToken = () => {
     if (!token) return null;
@@ -41,9 +34,10 @@ const useLikeButtonArtwork = (id: string | undefined) => {
       if (userEmail && token) {
         try {
           const likedArtworksData = await fetchUserLikedArtworks(token);
-          likedArtworksData.forEach((artwork: ArtworkModel) => {
-            addLikedArtwork(artwork._id);
-          });
+          const likedArtworksIds = likedArtworksData.map(
+            (artwork: ArtworkModel) => artwork._id,
+          );
+          setLikedArtworks(likedArtworksIds);
         } catch (error) {
           console.error('Error fetching liked artworks:', error);
         }
@@ -53,45 +47,27 @@ const useLikeButtonArtwork = (id: string | undefined) => {
     fetchLikes();
   }, [token, id]);
 
-  const toggleLikeMutation = useMutation(
-    (params: { token: string | null; type: string; id: string }) =>
-      apiToggleLike(params.token, params.type, params.id),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('artworks');
-      },
-    },
-  );
-
-  const handleLikeStatusChange = debounce(async () => {
-    if (!isRequesting) {
-      setIsRequesting(true);
-      const userEmail = getUserDetailsFromToken();
-      if (userEmail && id) {
-        try {
-          await toggleLikeMutation.mutateAsync({ token, type: 'artwork', id });
-          if (isLiked) {
-            removeLikedArtwork(id);
-          } else {
-            addLikedArtwork(id);
-          }
-          setIsRequesting(false);
-          return !isLiked;
-        } catch (error) {
-          console.error('Failed to update like status:', error);
-          setIsRequesting(false);
-          return null;
-        }
-      } else {
-        if (!userEmail) {
-          alert('로그인이 필요합니다.');
-        }
-        setIsRequesting(false);
-        return null;
+  const handleLikeStatusChange = async () => {
+    const userEmail = getUserDetailsFromToken();
+    if (userEmail && id) {
+      try {
+        const toggleResult = await apiToggleLike(token, 'artwork', id);
+        setLikedArtworks((prev) => {
+          const newLikedArtworks = prev.includes(id)
+            ? prev.filter((artworkId) => artworkId !== id)
+            : [...prev, id];
+          return newLikedArtworks;
+        });
+        return toggleResult; // 좋아요 상태를 토글한 결과를 반환
+      } catch (error) {
+        console.error('Failed to update like status:', error);
+        return null; // 로그인 상태에서만 좋아요 수를 변경하므로, 에러 발생 시 null을 반환
       }
+    } else {
+      alert('로그인이 필요합니다.');
+      return null; // 로그인하지 않은 상태에서는 null을 반환
     }
-    return null;
-  }, 500);
+  };
 
   return { isLiked, handleLikeStatusChange };
 };
