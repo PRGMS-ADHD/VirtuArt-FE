@@ -42,9 +42,6 @@ import MyPage from './pages/MyPage';
 import Artist from './pages/Artist';
 import Error from './components/common/Error';
 import ArtPieceDetail from '@/components/galleryDetail/ArtPieceDetail';
-import { QueryClient, QueryClientProvider } from 'react-query';
-
-const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
@@ -60,7 +57,7 @@ const router = createBrowserRouter([
       { path: 'artists', element: <Artists /> },
       { path: 'login', element: <Login /> },
       { path: 'reset', element: <Reset /> },
-      { path: 'signup', element: <Join /> },
+      { path: 'join', element: <Join /> },
       { path: 'artpiece/:id', element: <ArtPiece /> },
       { path: 'mypage', element: <MyPage /> },
       { path: 'artists/:id', element: <Artist /> },
@@ -71,11 +68,7 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-    </QueryClientProvider>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
