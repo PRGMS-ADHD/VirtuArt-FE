@@ -29,7 +29,6 @@
 // }
 //
 // export default App;
-
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import Layout from './components/common/Layout';
 import Gallery from './pages/Gallery';
@@ -42,6 +41,7 @@ import MyPage from './pages/MyPage';
 import Artist from './pages/Artist';
 import Error from './components/common/Error';
 import ArtPieceDetail from '@/components/galleryDetail/ArtPieceDetail';
+import LandingPage from './pages/Landing';
 
 const router = createBrowserRouter([
   {
@@ -53,7 +53,8 @@ const router = createBrowserRouter([
     ),
     errorElement: <Error />,
     children: [
-      { path: '', element: <Gallery /> },
+      { path: '', element: <LandingPage /> }, // 기본 경로에 LandingPage 설정
+      { path: 'gallery', element: <Gallery /> },
       { path: 'artists', element: <Artists /> },
       { path: 'login', element: <Login /> },
       { path: 'reset', element: <Reset /> },
