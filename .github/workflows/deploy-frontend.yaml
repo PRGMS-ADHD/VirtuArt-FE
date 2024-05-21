@@ -25,12 +25,10 @@ jobs:
 
       - name: Install dependencies
         run: |
-          cd VirtuArt-FE
           npm install
 
       - name: Build the project
         run: |
-          cd VirtuArt-FE
           npm run build
 
       - name: Deploy to S3
