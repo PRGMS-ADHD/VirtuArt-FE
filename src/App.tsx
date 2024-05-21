@@ -57,7 +57,7 @@ const router = createBrowserRouter([
       { path: 'artists', element: <Artists /> },
       { path: 'login', element: <Login /> },
       { path: 'reset', element: <Reset /> },
-      { path: 'signup', element: <Join /> },
+      { path: 'join', element: <Join /> },
       { path: 'artpiece/:id', element: <ArtPiece /> },
       { path: 'mypage', element: <MyPage /> },
       { path: 'artists/:id', element: <Artist /> },
