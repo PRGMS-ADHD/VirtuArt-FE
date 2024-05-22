@@ -48,6 +48,7 @@ export default {
         custom: '1160px',
         custom2: '960px',
         custom3: '431px',
+        custom768: '768px',
       },
     },
   },

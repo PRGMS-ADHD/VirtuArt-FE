@@ -114,14 +114,13 @@ const ArtPieceDetail = () => {
           />
         </div>
       </div>
-      <div className="flex flex-col items-start justify-evenly gap-5 pb-6 xl:flex-row">
-        <div className="relative mx-0 flex h-auto w-full items-center justify-center shadow-custom-shadow xl:h-[38.5rem] xl:w-[37.5rem]">
+      <div className="flex flex-col items-center justify-evenly gap-5 pb-6 xl:flex-row">
+        <div className="relative mx-0 flex h-auto max-w-[80%] items-center justify-center shadow-custom-shadow custom:h-[38.5rem] custom:w-[37.5rem]">
           <img
             src={artWork.image}
             alt={artWork.name}
             style={{
-              height: '80%',
-              width: '80%',
+              maxHeight: '80%',
               paddingBottom: '4px',
             }}
           />
