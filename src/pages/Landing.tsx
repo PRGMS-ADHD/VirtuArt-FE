@@ -59,17 +59,6 @@ const RightTextComponent: React.FC = () => {
   );
 };
 
-// const LandingPage: React.FC = () => {
-//   return (
-//     <div className="relative flex h-screen w-screen items-center justify-center overflow-hidden">
-//       <main className="custom2:flex-row custom2:px-24 custom2:justify-between absolute inset-0 flex h-full w-full flex-col items-center justify-around px-8">
-//         <VideoComponent />
-//         <LeftTextComponent />
-//         <RightTextComponent />
-//       </main>
-//     </div>
-//   );
-// };
 const LandingPage: React.FC = () => {
   return (
     <div className="relative flex h-full w-screen items-center justify-center overflow-hidden">
