@@ -24,7 +24,7 @@ export interface SignUpData {
 export interface User {
   username: string;
   email: string;
-  id: string;
+  _id: string;
   intro: string;
   profile_image: string;
   cover_image: string;

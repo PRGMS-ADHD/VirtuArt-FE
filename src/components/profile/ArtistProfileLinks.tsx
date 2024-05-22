@@ -8,7 +8,7 @@ interface ProfileLinksProps {
 
 const ArtistProfileLinks: React.FC<ProfileLinksProps> = ({ artist }) => {
   return (
-    <div className="ml-36 mt-5 flex items-baseline justify-between custom:mb-4 custom:ml-14">
+    <div className="ml-36 mt-5 flex items-baseline justify-between custom:mb-4 custom:ml-14 sm:block custom:block hidden">
       <IconLink
         type="location"
         text={artist?.location || ''}

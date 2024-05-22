@@ -52,7 +52,7 @@ function Join() {
       };
       await signUp(signUpData);
       alert('Successfully signed up');
-      navigate('/');
+      navigate('/login');
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
         const errorMessage = error.response.data.message;

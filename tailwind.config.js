@@ -46,6 +46,8 @@ export default {
       },
       screens: {
         custom: '1160px',
+        custom2: '960px',
+        custom3: '431px',
       },
     },
   },
