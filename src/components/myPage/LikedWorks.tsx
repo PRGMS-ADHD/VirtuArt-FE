@@ -17,13 +17,15 @@ const LikedWorks: React.FC<LikedWorksProps> = ({ works }) => {
   const navigate = useNavigate();
 
   const handleLoadMore = useCallback(() => {
+    const increment = window.innerWidth < 768 ? 4 : 8;
+
     if (!isExpanded) {
-      const newVisibleItems = visibleItems + 8;
+      const newVisibleItems = visibleItems + increment;
       setVisibleItems(newVisibleItems);
       setIsExpanded(newVisibleItems >= works.length);
     } else {
-      setVisibleItems(8);
-      setIsExpanded(!isExpanded);
+      setVisibleItems(increment);
+      setIsExpanded(false);
     }
   }, [isExpanded, visibleItems, works.length]);
 

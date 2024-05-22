@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { ArtistModel } from '@/models/artist.model';
 import { useNavigate } from 'react-router-dom';
 import LoadMoreButton from '@/components/common/LoadMoreButton';
@@ -16,16 +16,18 @@ const LikedArtists: React.FC<LikedArtistsProps> = ({ artists }) => {
   const [showTooltip, setShowTooltip] = useState(false);
   const navigate = useNavigate();
 
-  const handleLoadMore = () => {
+  const handleLoadMore = useCallback(() => {
+    const increment = window.innerWidth < 768 ? 4 : 8;
+
     if (!isExpanded) {
-      const newVisibleItems = visibleItems + 8;
+      const newVisibleItems = visibleItems + increment;
       setVisibleItems(newVisibleItems);
-      setIsExpanded(newVisibleItems > artists.length);
+      setIsExpanded(newVisibleItems >= artists.length);
     } else {
-      setVisibleItems(8);
-      setIsExpanded(!isExpanded);
+      setVisibleItems(increment);
+      setIsExpanded(false);
     }
-  };
+  }, [isExpanded, visibleItems, artists.length]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -53,7 +55,7 @@ const LikedArtists: React.FC<LikedArtistsProps> = ({ artists }) => {
   return (
     <div className="my-6 flex flex-col items-center justify-center px-8">
       <div className="border-b border-customGray6">
-        <div className="min-h-[45vh] min-w-[87vw] mx-auto pt-8">
+        <div className="mx-auto min-h-[45vh] min-w-[87vw] pt-8">
           <p className="mb-1 ml-1 font-helveticaNeue text-xl">LIKED ARTISTS</p>
           <div className="relative grid grid-cols-1 gap-8 transition-all duration-700 sm:grid-cols-2 custom:grid-cols-4">
             {artists.slice(0, visibleItems).map((artist) => (
