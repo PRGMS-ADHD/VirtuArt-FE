@@ -120,8 +120,9 @@ const ArtPieceDetail = () => {
             src={artWork.image}
             alt={artWork.name}
             style={{
-              maxHeight: '100%',
-              maxWidth: '100%',
+              height: '80%',
+              width: '80%',
+              paddingBottom: '4px',
             }}
           />
         </div>

@@ -8,7 +8,7 @@ interface ProfileLinksProps {
 
 const ProfileLinks: React.FC<ProfileLinksProps> = ({ user }) => {
   return (
-    <div className="ml-36 mt-5 flex items-baseline justify-between custom:mb-4 custom:ml-14">
+    <div className="ml-36 mt-5 flex flex-col items-baseline justify-between custom:mb-4 custom:ml-14 custom:flex-row">
       <IconLink
         type="location"
         text="서울, 대한민국"
