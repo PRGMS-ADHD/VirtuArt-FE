@@ -9,7 +9,7 @@ const VideoComponent: React.FC = () => {
         muted
         loop
         playsInline
-        className="h-full w-full object-cover"
+        className="h-full min-h-full min-w-full object-cover"
       >
         <source
           src="https://dgz50u1nq28v1.cloudfront.net/4360565-uhd_3840_2160_24fps.mp4"
@@ -24,7 +24,7 @@ const VideoComponent: React.FC = () => {
 
 const LeftTextComponent: React.FC = () => {
   return (
-    <div className="relative z-10 mb-8 text-left text-white md:mb-0">
+    <div className="custom768:text-left relative z-10 mb-8 text-center text-white md:mb-0">
       <h1
         className="mb-7 text-5xl font-bold md:text-7xl"
         style={{ fontSize: '5.2rem' }}
@@ -47,10 +47,10 @@ const LeftTextComponent: React.FC = () => {
 const RightTextComponent: React.FC = () => {
   return (
     <div className="relative z-10 text-right text-white">
-      <h1 className="mb-4 text-7xl font-bold md:text-[5.2rem]">
+      <h1 className="custom3:text-[5.2rem] mb-4 text-7xl font-bold">
         VIRTU<span className="text-yellow-500">ART</span>
       </h1>
-      <div className="custom3:flex-row mt-8 flex flex-col items-center justify-center gap-4">
+      <div className="custom3:flex-row mb-6 mt-8 flex flex-col items-center justify-center gap-4">
         <Link to="/gallery">
           <button className="custom3:px-10 rounded-full bg-white px-12 py-2 text-black">
             갤러리 둘러보기
@@ -68,8 +68,8 @@ const RightTextComponent: React.FC = () => {
 
 const LandingPage: React.FC = () => {
   return (
-    <div className="relative flex h-full w-screen items-center justify-center overflow-hidden">
-      <main className="custom2:flex-row custom2:px-24 custom2:justify-between absolute inset-0 flex h-full w-full flex-col items-center justify-around px-8">
+    <div className="relative flex h-full w-screen items-center justify-center">
+      <main className="custom2:flex-row custom2:px-24 custom2:justify-between inset-0 flex h-full w-full flex-col items-center justify-around px-8">
         <VideoComponent />
         <LeftTextComponent />
         <RightTextComponent />
