@@ -48,7 +48,7 @@ const MyPage: React.FC = () => {
       <div className="w-full">
         <UserProfileCard>{/*임시로 버튼 삭제*/}</UserProfileCard>
       </div>
-      <div className="w-full">
+      <div>
         <LikedWorks works={likedWorks} />
         <LikedArtists artists={likedArtists} />
       </div>

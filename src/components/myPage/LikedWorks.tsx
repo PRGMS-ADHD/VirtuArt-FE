@@ -65,7 +65,7 @@ const LikedWorks: React.FC<LikedWorksProps> = ({ works }) => {
   };
 
   return (
-    <div className="my-6 flex flex-col items-center justify-center px-8">
+    <div className="my-6 flex flex-col items-center justify-center px-8 bg-customGray5">
       <div className="border-b border-customGray6">
         <div className="mx-auto min-h-[45vh] min-w-[87vw] pt-8">
           <p className="mb-1 ml-1 font-helveticaNeue text-xl">LIKED WORKS</p>

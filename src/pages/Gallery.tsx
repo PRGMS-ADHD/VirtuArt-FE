@@ -8,7 +8,7 @@ const Gallery = () => {
         initial={{ opacity: 0, x: -100 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 1.5 }}
-        className="font my-2 text-2xl font-medium"
+        className="font my-2 text-center text-2xl font-medium"
         style={{ fontFamily: 'Helvetica Neue' }}
       >
         Hear the Stories Beyond the Canvas!

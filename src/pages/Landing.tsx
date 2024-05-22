@@ -1,9 +1,16 @@
 import { Link } from 'react-router-dom';
+import React from 'react';
 
 const VideoComponent: React.FC = () => {
   return (
     <div className="absolute inset-0 h-full w-full">
-      <video autoPlay muted loop className="h-full w-full object-cover">
+      <video
+        autoPlay
+        muted
+        loop
+        playsInline
+        className="h-full w-full object-cover"
+      >
         <source
           src="https://dgz50u1nq28v1.cloudfront.net/4360565-uhd_3840_2160_24fps.mp4"
           type="video/mp4"
@@ -45,7 +52,7 @@ const RightTextComponent: React.FC = () => {
       </h1>
       <div className="custom3:flex-row mt-8 flex flex-col items-center justify-center gap-4">
         <Link to="/gallery">
-          <button className="rounded-full bg-white px-10 py-2 text-black">
+          <button className="custom3:px-10 rounded-full bg-white px-12 py-2 text-black">
             갤러리 둘러보기
           </button>
         </Link>
