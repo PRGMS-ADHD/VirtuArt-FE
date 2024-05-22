@@ -59,7 +59,7 @@ const Artist: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="w-full">
       <ArtistProfileCard artist={artist}>
         <LikesCountButton
           likes={artist.likes}

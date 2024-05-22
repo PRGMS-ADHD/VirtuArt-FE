@@ -1,34 +1,3 @@
-// import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-// import MyPage from '@/pages/MyPage';
-// import Artist from '@/pages/Artist';
-// import Layout from './components/common/Layout';
-// import Gallery from './pages/Gallery';
-// import Login from './pages/Login';
-// import Reset from './pages/Reset';
-// import Join from './pages/Join';
-// import Artists from './pages/Artists';
-// import ArtPiece from './pages/ArtPiece';
-//
-// function App() {
-//   return (
-//     <Router>
-//       <Layout>
-//         <Routes>
-//           <Route path="/" element={<Gallery />} />
-//           <Route path="/artists" element={<Artists />} />
-//           <Route path="/login" element={<Login />} />
-//           <Route path="/reset" element={<Reset />} />
-//           <Route path="/signup" element={<Join />} />
-//           <Route path="/artpiece/:id" element={<ArtPiece />} />
-//           <Route path="/mypage" element={<MyPage />} />
-//           <Route path="/artist/:id" element={<Artist />} />
-//         </Routes>
-//       </Layout>
-//     </Router>
-//   );
-// }
-//
-// export default App;
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import Layout from './components/common/Layout';
 import Gallery from './pages/Gallery';
@@ -42,8 +11,18 @@ import Artist from './pages/Artist';
 import Error from './components/common/Error';
 import ArtPieceDetail from '@/components/galleryDetail/ArtPieceDetail';
 import LandingPage from './pages/Landing';
+import LandingLayout from '@/components/common/LandingLayout';
 
 const router = createBrowserRouter([
+  {
+    path: '/',
+    element: (
+      <LandingLayout>
+        <LandingPage />
+      </LandingLayout>
+    ),
+    errorElement: <Error />,
+  },
   {
     path: '/',
     element: (
@@ -53,7 +32,7 @@ const router = createBrowserRouter([
     ),
     errorElement: <Error />,
     children: [
-      { path: '', element: <LandingPage /> }, // 기본 경로에 LandingPage 설정
+      { path: '/', element: <LandingPage /> }, // 기본 경로에 LandingPage 설정
       { path: 'gallery', element: <Gallery /> },
       { path: 'artists', element: <Artists /> },
       { path: 'login', element: <Login /> },

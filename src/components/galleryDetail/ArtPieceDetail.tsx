@@ -160,9 +160,9 @@ const ArtPieceDetail = () => {
             ) : (
               <div className="flex h-full flex-col items-center justify-center">
                 <p className="text-center">{artWork.intro}</p>
-                <p className="text-center">
+                <div className="text-center">
                   <Tags />
-                </p>
+                </div>
               </div>
             )}
           </div>

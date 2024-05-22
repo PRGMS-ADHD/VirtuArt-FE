@@ -23,19 +23,19 @@ const ArtistProfile: React.FC<ArtistProfileCardProps> = ({
       <img
         src={image}
         alt="image1.png"
-        className="h-[330px] w-[1920px] object-cover opacity-60"
+        className="h-40 w-full cursor-pointer object-cover opacity-60 custom:h-72"
       />
-      <div className="relative flex h-[256px] w-[1196px] flex-col justify-end">
+      <div className="relative flex w-full max-w-screen-lg flex-col justify-end custom:h-64 ">
         <ProfilePicture
           src={artist.profile_image}
-          className="absolute left-[-54px] top-[-54px]"
+          className="absolute bottom-36 left-2 cursor-pointer custom:left-[-3.375rem] custom:top-[-3.375rem]"
         />
-        <div className="mt-6 flex items-center justify-between">
+        <div className="mt-6 flex items-center justify-between p-4">
           <div className="flex items-center">
-            <p className="ml-[80px] font-noto-sans-kr text-3xl font-normal leading-normal text-black">
-              {artist.name}
+            <p className="ml-32 font-noto-sans-kr text-3xl font-normal text-black custom:ml-20">
+              {artist.name || 'Loading..'}
             </p>
-            <p className="font-noto-sans-kr text-base font-normal leading-normal text-black">
+            <p className="font-noto-sans-kr text-base font-normal leading-normal text-black sm:block custom:block hidden">
               &nbsp;({artist.e_name})
             </p>
           </div>

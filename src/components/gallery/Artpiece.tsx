@@ -160,7 +160,8 @@ const Artpiece: React.FC<ArtpieceProps> = ({ category }) => {
             style={{
               left: '-15px',
               top: '56%',
-              transform: 'translateY(-50%)',
+              transform: 'translateY(-38%)',
+              boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.30)',
             }}
           >
             <MdNavigateBefore className="text-lg" />
@@ -173,7 +174,8 @@ const Artpiece: React.FC<ArtpieceProps> = ({ category }) => {
             style={{
               right: '-15px',
               top: '56%',
-              transform: 'translateY(-50%)',
+              transform: 'translateY(-38%)',
+              boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.30)',
             }}
           >
             <MdNavigateNext className="text-lg" />

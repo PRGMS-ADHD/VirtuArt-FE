@@ -57,7 +57,7 @@ function Header() {
         }}
       >
         <img
-          src="../../../public/icon/logo.png"
+          src="https://dgz50u1nq28v1.cloudfront.net/logo"
           alt="logo"
           width="70"
           height="70"

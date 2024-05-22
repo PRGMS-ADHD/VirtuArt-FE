@@ -17,7 +17,7 @@ const useAuth = () => {
       storeLogin(res.token);
 
       alert('Login successful');
-      navigate('/');
+      navigate('/gallery');
     } catch (error) {
       console.error('please check your password and try again.', error);
       alert('please check your password and try again.');

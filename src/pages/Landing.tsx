@@ -1,17 +1,5 @@
 import { Link } from 'react-router-dom';
 
-const LandingPage: React.FC = () => {
-  return (
-    <div className="relative flex h-screen w-screen items-center justify-center overflow-hidden">
-      <main className="absolute inset-0 flex h-full w-full flex-col items-center justify-between px-8 md:flex-row md:px-24">
-        <VideoComponent />
-        <LeftTextComponent />
-        <RightTextComponent />
-      </main>
-    </div>
-  );
-};
-
 const VideoComponent: React.FC = () => {
   return (
     <div className="absolute inset-0 h-full w-full">
@@ -40,7 +28,7 @@ const LeftTextComponent: React.FC = () => {
         <br />
         <span className="text-yellow-500">I</span>nspired
       </h1>
-      <p className="mt- text-lg md:text-ml">
+      <p className="mt- md:text-ml text-lg">
         예술가와 예술애호가를 위한 최고의 플랫폼
         <br />
         다양한 아티스트와 작품을 만나보세요!
@@ -52,13 +40,10 @@ const LeftTextComponent: React.FC = () => {
 const RightTextComponent: React.FC = () => {
   return (
     <div className="relative z-10 text-right text-white">
-      <h1
-        className="mb-4 text-5xl font-bold md:text-7xl"
-        style={{ fontSize: '5.2rem' }}
-      >
+      <h1 className="mb-4 text-7xl font-bold md:text-[5.2rem]">
         VIRTU<span className="text-yellow-500">ART</span>
       </h1>
-      <div className="mt-8 flex justify-end space-x-4">
+      <div className="custom3:flex-row mt-8 flex flex-col items-center justify-center gap-4">
         <Link to="/gallery">
           <button className="rounded-full bg-white px-10 py-2 text-black">
             갤러리 둘러보기
@@ -70,6 +55,29 @@ const RightTextComponent: React.FC = () => {
           </button>
         </Link>
       </div>
+    </div>
+  );
+};
+
+// const LandingPage: React.FC = () => {
+//   return (
+//     <div className="relative flex h-screen w-screen items-center justify-center overflow-hidden">
+//       <main className="custom2:flex-row custom2:px-24 custom2:justify-between absolute inset-0 flex h-full w-full flex-col items-center justify-around px-8">
+//         <VideoComponent />
+//         <LeftTextComponent />
+//         <RightTextComponent />
+//       </main>
+//     </div>
+//   );
+// };
+const LandingPage: React.FC = () => {
+  return (
+    <div className="relative flex h-full w-screen items-center justify-center overflow-hidden">
+      <main className="custom2:flex-row custom2:px-24 custom2:justify-between absolute inset-0 flex h-full w-full flex-col items-center justify-around px-8">
+        <VideoComponent />
+        <LeftTextComponent />
+        <RightTextComponent />
+      </main>
     </div>
   );
 };

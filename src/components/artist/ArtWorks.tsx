@@ -152,6 +152,7 @@ const ArtWorks: React.FC<FetchAndDisplayGridProps> = ({
           <div className="relative grid grid-cols-1 gap-8 transition-all duration-700 sm:grid-cols-2 custom:grid-cols-4">
             {artworks.slice(0, visibleItems).map((artwork) => (
               <ArtworkItem
+                key={artwork._id}
                 artwork={artwork}
                 errorImage={errorImage}
                 handleArtistClick={handleArtistClick}

@@ -107,9 +107,9 @@ const Tags = () => {
   return (
     <div className="flex w-full justify-center p-6">
       <div className="flex gap-4 text-center">
-        {tags.map((tag, index) => (
+        {tags.map((tag) => (
           <span
-            key={index}
+            key={tag}
             className="rounded-2xl border border-black bg-white p-4 py-2 text-[11px] text-black shadow-md"
           >
             #{tag}

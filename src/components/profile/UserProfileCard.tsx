@@ -217,7 +217,7 @@ const UserProfileCard: React.FC<UserProfileCardProps> = ({ children }) => {
               </form>
             ) : (
               <div className="flex items-center">
-                <p className="fonnamet-noto-sans-kr ml-36 text-3xl font-normal text-black custom:ml-20">
+                <p className="ml-36 font-noto-sans-kr text-3xl font-normal text-black custom:ml-20">
                   {user?.username || 'Loading..'}
                 </p>
                 <button

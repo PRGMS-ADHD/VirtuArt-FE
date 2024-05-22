@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LoadMoreButton from '@/components/common/LoadMoreButton';
 import { ArtworkModel } from '@/models/artwork.model';
@@ -27,6 +27,20 @@ const LikedWorks: React.FC<LikedWorksProps> = ({ works }) => {
     }
   }, [isExpanded, visibleItems, works.length]);
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setVisibleItems(4);
+      } else {
+        setVisibleItems(8);
+      }
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const handleWorkClick = useCallback(
     (workId: string) => {
       navigate(`/artworks/${workId}`);
@@ -51,7 +65,7 @@ const LikedWorks: React.FC<LikedWorksProps> = ({ works }) => {
   return (
     <div className="my-6 flex flex-col items-center justify-center px-8">
       <div className="border-b border-customGray6">
-        <div className="min-h-[45vh] min-w-[87vw] pt-8">
+        <div className="mx-auto min-h-[45vh] min-w-[87vw] pt-8">
           <p className="mb-1 ml-1 font-helveticaNeue text-xl">LIKED WORKS</p>
           <div className="relative grid grid-cols-1 gap-8 transition-all duration-700 sm:grid-cols-2 custom:grid-cols-4">
             {visibleWorks.map((work) => (
@@ -66,7 +80,7 @@ const LikedWorks: React.FC<LikedWorksProps> = ({ works }) => {
                   src={work.image ? work.image : errorImage}
                   alt={work.name ? work.name : 'errorImage'}
                   className="object-cover transition-all duration-700"
-                  style={{ width: '20vw', height: '20vh' }}
+                  style={{ width: '350px', height: '200px' }}
                 />
                 {showTooltip && hoveredImageId === work._id && (
                   <ImageTooltip title={work.name} artist={work.artist} />

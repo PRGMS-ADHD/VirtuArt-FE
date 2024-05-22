@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ArtistModel } from '@/models/artist.model';
 import { useNavigate } from 'react-router-dom';
 import LoadMoreButton from '@/components/common/LoadMoreButton';
@@ -27,6 +27,20 @@ const LikedArtists: React.FC<LikedArtistsProps> = ({ artists }) => {
     }
   };
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setVisibleItems(4);
+      } else {
+        setVisibleItems(8);
+      }
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const handleMouseEnter = (id: string) => {
     setShowTooltip(true);
     setHoveredImageId(id);
@@ -39,7 +53,7 @@ const LikedArtists: React.FC<LikedArtistsProps> = ({ artists }) => {
   return (
     <div className="my-6 flex flex-col items-center justify-center px-8">
       <div className="border-b border-customGray6">
-        <div className="min-h-[45vh] min-w-[87vw] pt-8">
+        <div className="min-h-[45vh] min-w-[87vw] mx-auto pt-8">
           <p className="mb-1 ml-1 font-helveticaNeue text-xl">LIKED ARTISTS</p>
           <div className="relative grid grid-cols-1 gap-8 transition-all duration-700 sm:grid-cols-2 custom:grid-cols-4">
             {artists.slice(0, visibleItems).map((artist) => (
@@ -54,7 +68,7 @@ const LikedArtists: React.FC<LikedArtistsProps> = ({ artists }) => {
                   src={artist.profile_image ? artist.profile_image : errorImage}
                   alt={artist.profile_image ? artist.name : 'errorImage'}
                   className="object-cover transition-all duration-700"
-                  style={{ width: '20vw', height: '20vh' }}
+                  style={{ width: '350px', height: '200px' }}
                 />
                 {showTooltip && hoveredImageId === artist._id && (
                   <ImageTooltip title={artist.name} />

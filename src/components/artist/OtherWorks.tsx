@@ -11,7 +11,7 @@ import { useAuthStore } from '@/store/authStore';
 
 interface FetchAndDisplayGridProps {
   errorImage: string;
-  className?: string;
+  // className?: string;
   artist: ArtistModel | null;
   id: string | undefined;
 }
@@ -49,7 +49,7 @@ const OtherArtWorkItem: React.FC<OtherArtWorkItemProps> = ({
       {artwork.image ? (
         <img
           src={artwork.image}
-          className="h-[200px] w-[350px] object-cover transition-all duration-700"
+          className="h-[12.5rem] w-[21.875rem] object-cover transition-all duration-700 sm:h-[15rem] sm:w-[25rem]"
         />
       ) : (
         <img
@@ -76,7 +76,7 @@ const OtherArtWorkItem: React.FC<OtherArtWorkItemProps> = ({
 
 const OtherWorks: React.FC<FetchAndDisplayGridProps> = ({
   errorImage,
-  className,
+  // className,
   artist,
   id,
 }) => {
@@ -149,15 +149,14 @@ const OtherWorks: React.FC<FetchAndDisplayGridProps> = ({
   };
 
   return (
-    <div
-      className={`my-6 flex flex-col items-center justify-center ${className} px-8`}
-    >
-      <div className="border-b border-customGray6">
+    <div className={`my-6 flex items-center justify-center px-8`}>
+      <div className="w-[88%] border-b border-customGray6">
         <div className="pt-8">
           <p className="mb-1 ml-1 font-helveticaNeue text-xl">OTHER WORKS</p>
           <div className="relative grid grid-cols-1 gap-8 transition-all duration-700 sm:grid-cols-2 custom:grid-cols-4">
             {artworks.slice(0, visibleItems).map((artwork) => (
               <OtherArtWorkItem
+                key={artwork._id}
                 artwork={artwork}
                 errorImage={errorImage}
                 handleArtistClick={handleArtistClick}
