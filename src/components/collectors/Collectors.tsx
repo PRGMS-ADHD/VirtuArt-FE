@@ -9,7 +9,7 @@ const CollectorCard: React.FC<{ collector: User }> = ({ collector }) => (
     <img
       src={collector.profile_image}
       alt={collector.username}
-      className="w-30 h-30 mb-2 rounded-full object-cover"
+      className="w-[126px] h-[126px] mb-2 rounded-full"
       onError={(e) => {
         e.currentTarget.onerror = null;
         e.currentTarget.src = errorPersonImg;
