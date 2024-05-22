@@ -36,7 +36,7 @@ const Artists = () => {
         initial={{ opacity: 0, x: -100 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 1.5 }}
-        className="font my-2 text-2xl font-medium"
+        className="font my-2 text-center text-2xl font-medium"
         style={{
           fontFamily: 'Helvetica Neue',
         }}
@@ -47,12 +47,15 @@ const Artists = () => {
         initial={{ opacity: 0, x: -100 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 2, delay: 0.4 }}
-        className="mb-6 text-sm font-extralight"
+        className="mb-6 text-center text-sm font-extralight"
         style={{
           fontFamily: 'Noto Sans KR',
         }}
       >
-        창작의 매력에 빠져보세요! 여러분을 기다리는 아티스트들이 있습니다.
+        <span className="custom768:inline hidden">
+          창작의 매력에 빠져보세요!{' '}
+        </span>
+        여러분을 기다리는 아티스트들이 있습니다.
       </motion.p>
       <ArtistsList artists={artists} categories={categories} />
     </div>
