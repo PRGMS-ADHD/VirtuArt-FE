@@ -7,9 +7,10 @@ import errorImage from '../../../public/errorImage/artErrorImg.jpg';
 
 interface LikedWorksProps {
   works: ArtworkModel[];
+  isLoading: boolean;
 }
 
-const LikedWorks: React.FC<LikedWorksProps> = ({ works }) => {
+const LikedWorks: React.FC<LikedWorksProps> = ({ works, isLoading }) => {
   const [visibleItems, setVisibleItems] = useState(8);
   const [isExpanded, setIsExpanded] = useState(false);
   const [hoveredImageId, setHoveredImageId] = useState<string | null>(null);
@@ -65,31 +66,35 @@ const LikedWorks: React.FC<LikedWorksProps> = ({ works }) => {
   };
 
   return (
-    <div className="my-6 flex flex-col items-center justify-center px-8 bg-customGray5">
+    <div className="my-6 flex flex-col items-center justify-center bg-customGray5 px-8">
       <div className="border-b border-customGray6">
         <div className="mx-auto min-h-[45vh] min-w-[87vw] pt-8">
           <p className="mb-1 ml-1 font-helveticaNeue text-xl">LIKED WORKS</p>
-          <div className="relative grid grid-cols-1 gap-8 transition-all duration-700 sm:grid-cols-2 custom:grid-cols-4">
-            {visibleWorks.map((work) => (
-              <div
-                key={work._id}
-                className="relative cursor-pointer"
-                onClick={() => handleWorkClick(work._id)}
-                onMouseEnter={() => handleMouseEnter(work._id)}
-                onMouseLeave={handleMouseLeave}
-              >
-                <img
-                  src={work.image ? work.image : errorImage}
-                  alt={work.name ? work.name : 'errorImage'}
-                  className="object-cover transition-all duration-700"
-                  style={{ width: '350px', height: '200px' }}
-                />
-                {showTooltip && hoveredImageId === work._id && (
-                  <ImageTooltip title={work.name} artist={work.artist} />
-                )}
-              </div>
-            ))}
-          </div>
+          {isLoading ? (
+            <div style={{ minHeight: '200px' }}>Loading works...</div>
+          ) : (
+            <div className="relative grid grid-cols-1 gap-8 transition-all duration-700 sm:grid-cols-2 custom:grid-cols-4">
+              {visibleWorks.map((work) => (
+                <div
+                  key={work._id}
+                  className="relative cursor-pointer"
+                  onClick={() => handleWorkClick(work._id)}
+                  onMouseEnter={() => handleMouseEnter(work._id)}
+                  onMouseLeave={handleMouseLeave}
+                >
+                  <img
+                    src={work.image ? work.image : errorImage}
+                    alt={work.name ? work.name : 'errorImage'}
+                    className="object-cover transition-all duration-700"
+                    style={{ width: '350px', height: '200px' }}
+                  />
+                  {showTooltip && hoveredImageId === work._id && (
+                    <ImageTooltip title={work.name} artist={work.artist} />
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
         <LoadMoreButton onClick={handleLoadMore} isExpanded={isExpanded} />
       </div>

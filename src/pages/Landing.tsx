@@ -29,7 +29,7 @@ const LeftTextComponent: React.FC = () => {
         className="mb-7 text-5xl font-bold md:text-7xl"
         style={{ fontSize: '5.2rem' }}
       >
-        <span className="text-yellow-500">C</span>onnect,
+        <span className="text-yello w-500">C</span>onnect,
         <br />
         <span className="text-yellow-500">C</span>ollect,
         <br />

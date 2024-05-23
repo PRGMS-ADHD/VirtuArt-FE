@@ -10,4 +10,5 @@ export interface ArtworkModel {
   category: string;
   description: string;
   artist_id: string;
+  isLiked?: boolean;
 }

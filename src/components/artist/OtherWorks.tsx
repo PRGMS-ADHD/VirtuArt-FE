@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import LoadMoreButton from '@/components/common/LoadMoreButton';
 import { ArtistModel } from '@/models/artist.model';
 import { fetchArtWorksByArtist } from '@/api/images.api';
 import { ArtworkModel } from '@/models/artwork.model';
 import ImageTooltip from '@/components/gallery/ImageTooltip';
-import useLikeButtonArtWork from '@/hooks/useLikeButtonArtWork';
 import LikesButton from '@/components/image/LikesButton';
 import { useAuthStore } from '@/store/authStore';
+import { fetchUserLikedArtworks, apiToggleLike } from '@/api/likes.api';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 interface FetchAndDisplayGridProps {
   errorImage: string;
-  // className?: string;
   artist: ArtistModel | null;
-  id: string | undefined;
+  artworkId?: string;
 }
 
 interface OtherArtWorkItemProps {
@@ -24,6 +24,7 @@ interface OtherArtWorkItemProps {
   handleMouseLeave: () => void;
   showTooltip: boolean;
   hoveredImageId: string | null;
+  handleLikeStatusChange: (artworkId: string) => void;
 }
 
 const OtherArtWorkItem: React.FC<OtherArtWorkItemProps> = ({
@@ -34,14 +35,14 @@ const OtherArtWorkItem: React.FC<OtherArtWorkItemProps> = ({
   handleMouseLeave,
   showTooltip,
   hoveredImageId,
+  handleLikeStatusChange,
 }) => {
   const token = useAuthStore((state) => state.token);
-  const { isLiked, handleLikeStatusChange } = useLikeButtonArtWork(artwork._id);
 
   return (
     <div
       key={artwork._id}
-      className="relative cursor-pointer"
+      className="relative"
       onClick={() => handleArtistClick(artwork._id)}
       onMouseEnter={() => handleMouseEnter(artwork._id)}
       onMouseLeave={handleMouseLeave}
@@ -49,7 +50,7 @@ const OtherArtWorkItem: React.FC<OtherArtWorkItemProps> = ({
       {artwork.image ? (
         <img
           src={artwork.image}
-          className="h-[12.5rem] w-[21.875rem] object-cover transition-all duration-700 sm:h-[15rem] sm:w-[25rem]"
+          className="h-[200px] w-full object-cover transition-all duration-700 sm:h-[15rem] sm:w-[25rem]"
         />
       ) : (
         <img
@@ -60,8 +61,8 @@ const OtherArtWorkItem: React.FC<OtherArtWorkItemProps> = ({
       )}
       <div className="absolute right-0 top-0 p-2">
         <LikesButton
-          initialLiked={isLiked}
-          onLikeStatusChange={handleLikeStatusChange}
+          initialLiked={artwork.isLiked || false}
+          onLikeStatusChange={() => handleLikeStatusChange(artwork._id)} // 이벤트 핸들러 연결
           targetId={artwork._id}
           targetType="artwork"
           token={token}
@@ -74,64 +75,175 @@ const OtherArtWorkItem: React.FC<OtherArtWorkItemProps> = ({
   );
 };
 
+// const OtherWorks: React.FC<FetchAndDisplayGridProps> = ({
+//   errorImage,
+//   artist,
+// }) => {
+//   const [artworks, setArtWorks] = useState<ArtworkModel[]>([]);
+//   const [visibleItems, setVisibleItems] = useState(8);
+//   const [isExpanded, setIsExpanded] = useState(false);
+//   const [hoveredImageId, setHoveredImageId] = useState<string | null>(null);
+//   const [showTooltip, setShowTooltip] = useState(false);
+//   const { token } = useAuthStore();
+//   const navigate = useNavigate();
+
+//   useEffect(() => {
+//     const fetchAndSetArtworks = async () => {
+//       try {
+//         if (artist && artist._id) {
+//           const artistArtworks = await fetchArtWorksByArtist(artist._id);
+//           const likedArtworks = await fetchUserLikedArtworks(token);
+
+//           const updatedArtworks = artistArtworks.map((artwork) => ({
+//             ...artwork,
+//             isLiked: likedArtworks.some(
+//               (likedArtwork) => likedArtwork._id === artwork._id,
+//             ),
+//           }));
+
+//           setArtWorks(updatedArtworks);
+//         }
+//       } catch (error) {
+//         console.error('Failed to fetch artworks:', error);
+//       }
+//     };
+
+//     if (artist && artist._id && token) {
+//       fetchAndSetArtworks();
+//     }
+//   }, [artist, token]);
+
+//   useEffect(() => {
+//     const handleResize = () => {
+//       if (window.innerWidth < 768) {
+//         setVisibleItems(4);
+//       } else {
+//         setVisibleItems(8);
+//       }
+//     };
+//     handleResize();
+//     window.addEventListener('resize', handleResize);
+
+//     return () => window.removeEventListener('resize', handleResize);
+//   }, []);
+
+//   const handleLikeStatusChange = async (artworkId: string) => {
+//     const artworkIndex = artworks.findIndex((art) => art._id === artworkId);
+//     if (artworkIndex !== -1) {
+//       const newArtworks = [...artworks];
+//       newArtworks[artworkIndex].isLiked = !newArtworks[artworkIndex].isLiked;
+//       setArtWorks(newArtworks); // Optimistically update the UI
+
+//       try {
+//         await apiToggleLike(token, 'artwork', artworkId);
+//       } catch (error) {
+//         console.error('Failed to toggle like status:', error);
+//         newArtworks[artworkIndex].isLiked = !newArtworks[artworkIndex].isLiked;
+//         setArtWorks(newArtworks);
+//       }
+//     }
+//   };
+
+//   const handleLoadMore = () => {
+//     if (!isExpanded) {
+//       const newVisibleItems = visibleItems + 8;
+//       setVisibleItems(newVisibleItems);
+//       setIsExpanded(newVisibleItems >= artworks.length);
+//     } else {
+//       setVisibleItems(8);
+//       setIsExpanded(false);
+//     }
+//   };
+
+//   const handleArtistClick = (artWorkId: string) => {
+//     navigate(`/artworks/${artWorkId}`);
+//     window.scrollTo(0, 0);
+//   };
+
+//   const handleMouseEnter = (id: string) => {
+//     setShowTooltip(true);
+//     setHoveredImageId(id);
+//   };
+
+//   const handleMouseLeave = () => {
+//     setShowTooltip(false);
+//   };
+
+//   return (
+//     <div className="my-6 flex items-center justify-center px-8">
+//       <div className="w-[88%] border-b border-customGray6">
+//         <div className="pt-8">
+//           <p className="mb-1 ml-1 font-helveticaNeue text-xl">OTHER WORKS</p>
+//           <div className="grid min-h-[200px] cursor-pointer grid-cols-1 gap-8 transition-all duration-700 sm:grid-cols-2 custom:grid-cols-4">
+//             {artworks.slice(0, visibleItems).map((artwork) => (
+//               <OtherArtWorkItem
+//                 key={artwork._id}
+//                 artwork={artwork}
+//                 errorImage={errorImage}
+//                 handleArtistClick={handleArtistClick}
+//                 handleMouseEnter={handleMouseEnter}
+//                 handleMouseLeave={handleMouseLeave}
+//                 showTooltip={showTooltip}
+//                 hoveredImageId={hoveredImageId}
+//                 handleLikeStatusChange={handleLikeStatusChange}
+//               />
+//             ))}
+//           </div>
+//         </div>
+//         <LoadMoreButton onClick={handleLoadMore} isExpanded={isExpanded} />
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default OtherWorks;
+
 const OtherWorks: React.FC<FetchAndDisplayGridProps> = ({
   errorImage,
-  // className,
   artist,
-  id,
+  artworkId,
 }) => {
-  const [artworks, setArtWorks] = useState<ArtworkModel[]>([]);
   const [visibleItems, setVisibleItems] = useState(8);
   const [isExpanded, setIsExpanded] = useState(false);
   const [hoveredImageId, setHoveredImageId] = useState<string | null>(null);
   const [showTooltip, setShowTooltip] = useState(false);
-
+  const { token } = useAuthStore();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
-  useEffect(() => {
-    const getArtWorks = async () => {
-      try {
-        if (artist && artist._id) {
-          const artistArtworks = await fetchArtWorksByArtist(artist._id);
-          const filteredArtworks = artistArtworks.filter(
-            (artwork: ArtworkModel) => artwork._id !== id,
-          );
-          setArtWorks(filteredArtworks);
-        }
-      } catch (error) {
-        console.error('Failed to fetch artworks:', error);
-      }
-    };
+  const {
+    data: artworks,
+    isLoading: isLoadingArtworks,
+    error: errorArtworks,
+  } = useQuery({
+    queryKey: ['artworks', artist?._id],
+    queryFn: () => fetchArtWorksByArtist(artist?._id),
+    enabled: !!artist?._id,
+  });
 
-    if (artist && artist._id) {
-      getArtWorks();
-    }
-  }, [artist, id]);
+  const { data: likedArtworks, isLoading: isLoadingLikedArtworks } = useQuery({
+    queryKey: ['likedArtworks', token],
+    queryFn: () => fetchUserLikedArtworks(token),
+    enabled: !!token,
+  });
 
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 768) {
-        setVisibleItems(4);
-      } else {
-        setVisibleItems(8);
-      }
-    };
+  const toggleLikeMutation = useMutation({
+    mutationFn: (artworkId: string) =>
+      apiToggleLike(token, 'artwork', artworkId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['artworks', artist?._id] });
+      queryClient.invalidateQueries({ queryKey: ['likedArtworks', token] });
+    },
+  });
 
-    handleResize();
-    window.addEventListener('resize', handleResize);
-
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  const handleLikeStatusChange = (artworkId: string) => {
+    toggleLikeMutation.mutate(artworkId);
+  };
 
   const handleLoadMore = () => {
-    if (!isExpanded) {
-      const newVisibleItems = visibleItems + 8;
-      setVisibleItems(newVisibleItems);
-      setIsExpanded(newVisibleItems >= artworks.length);
-    } else {
-      setVisibleItems(8);
-      setIsExpanded(!isExpanded);
-    }
+    const newVisibleItems = visibleItems + 8;
+    setVisibleItems(newVisibleItems);
+    setIsExpanded(newVisibleItems >= artworks?.length);
   };
 
   const handleArtistClick = (artWorkId: string) => {
@@ -146,27 +258,51 @@ const OtherWorks: React.FC<FetchAndDisplayGridProps> = ({
 
   const handleMouseLeave = () => {
     setShowTooltip(false);
+    setHoveredImageId(null);
   };
 
+  if (errorArtworks) {
+    return <div>Error loading artworks.</div>;
+  }
+
+  const artworksWithLikeStatus =
+    artworks
+      ?.map((artwork: ArtworkModel) => ({
+        ...artwork,
+        isLiked: likedArtworks?.some(
+          (likedArtwork) => likedArtwork._id === artwork._id,
+        ),
+      }))
+      .filter((artwork: ArtworkModel) => artwork._id !== artworkId) || [];
+
   return (
-    <div className={`my-6 flex items-center justify-center px-8`}>
+    <div className="my-6 flex items-center justify-center px-8">
       <div className="w-[88%] border-b border-customGray6">
         <div className="pt-8">
           <p className="mb-1 ml-1 font-helveticaNeue text-xl">OTHER WORKS</p>
-          <div className="relative grid grid-cols-1 gap-8 transition-all duration-700 sm:grid-cols-2 custom:grid-cols-4">
-            {artworks.slice(0, visibleItems).map((artwork) => (
-              <OtherArtWorkItem
-                key={artwork._id}
-                artwork={artwork}
-                errorImage={errorImage}
-                handleArtistClick={handleArtistClick}
-                handleMouseEnter={handleMouseEnter}
-                handleMouseLeave={handleMouseLeave}
-                showTooltip={showTooltip}
-                hoveredImageId={hoveredImageId}
-              />
-            ))}
-          </div>
+          {isLoadingArtworks || isLoadingLikedArtworks ? (
+            <div className="flex h-[200px] items-center justify-center">
+              Loading...
+            </div>
+          ) : (
+            <div className="grid min-h-[200px] cursor-pointer grid-cols-1 gap-8 transition-all duration-700 sm:grid-cols-2 custom:grid-cols-4">
+              {artworksWithLikeStatus
+                .slice(0, visibleItems)
+                .map((artwork: ArtworkModel) => (
+                  <OtherArtWorkItem
+                    key={artwork._id}
+                    artwork={artwork}
+                    errorImage={errorImage}
+                    handleArtistClick={handleArtistClick}
+                    handleMouseEnter={handleMouseEnter}
+                    handleMouseLeave={handleMouseLeave}
+                    showTooltip={showTooltip}
+                    hoveredImageId={hoveredImageId}
+                    handleLikeStatusChange={handleLikeStatusChange}
+                  />
+                ))}
+            </div>
+          )}
         </div>
         <LoadMoreButton onClick={handleLoadMore} isExpanded={isExpanded} />
       </div>

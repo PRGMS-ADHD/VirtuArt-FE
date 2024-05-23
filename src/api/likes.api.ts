@@ -1,10 +1,15 @@
 import { httpClient } from '@/api/http';
+import { ArtworkModel } from '@/models/artwork.model';
+
+interface ToggleLikeResult {
+  error?: boolean;
+}
 
 export const apiToggleLike = async (
   token: string | null,
   targetType: string,
   targetId: string,
-): Promise<boolean> => {
+): Promise<ToggleLikeResult> => {
   try {
     const response = await httpClient.post(
       `/likes/${targetType}/${targetId}`,
@@ -22,7 +27,9 @@ export const apiToggleLike = async (
   }
 };
 
-export const fetchUserLikedArtists = async (token: string): Promise<any> => {
+export const fetchUserLikedArtists = async (
+  token: string | null,
+): Promise<any> => {
   try {
     const response = await httpClient.get(`/likes/user/artists`, {
       headers: {
@@ -46,7 +53,9 @@ export const fetchArtistLikers = async (id: string) => {
   }
 };
 
-export const fetchUserLikedArtworks = async (token: string): Promise<any> => {
+export const fetchUserLikedArtworks = async (
+  token: string | null,
+): Promise<ArtworkModel[]> => {
   try {
     const response = await httpClient.get(`/likes/user/artworks`, {
       headers: {
