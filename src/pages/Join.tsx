@@ -10,7 +10,6 @@ import axios from 'axios';
 
 type FormValues = {
   email: string;
-  // nickname: string;
   password: string;
   passwordConfirm: string;
 };
@@ -18,7 +17,6 @@ type FormValues = {
 const schema = z
   .object({
     email: z.string().min(1, 'Email is required').email('Invalid email'),
-    // nickname: z.string().min(1, 'Nickname is required'),
     password: z
       .string()
       .min(8, 'Need 8 characters')

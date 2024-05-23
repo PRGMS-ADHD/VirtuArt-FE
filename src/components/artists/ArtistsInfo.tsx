@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MdNavigateNext, MdNavigateBefore } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { ArtistModel } from '@/models/artist.model';
@@ -18,6 +18,18 @@ interface ArtistsInfoProps {
 
 const ArtistsInfo: React.FC<ArtistsInfoProps> = ({ artists, categoryId }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [itemsToShow, setItemsToShow] = useState(
+    window.innerWidth < 768 ? 4 : 6,
+  );
+
+  useEffect(() => {
+    const handleResize = () => {
+      setItemsToShow(window.innerWidth < 768 ? 4 : 6);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleNext = () => {
     setCurrentIndex((prevIndex) =>
@@ -47,7 +59,7 @@ const ArtistsInfo: React.FC<ArtistsInfoProps> = ({ artists, categoryId }) => {
           {categoryNames[categoryId]}
         </div>
         {artists
-          .slice(currentIndex, currentIndex + 6)
+          .slice(currentIndex, currentIndex + itemsToShow)
           .map(({ _id: id, profile_image, name }) => (
             <div key={id} className="relative inline-block rounded p-1">
               <Link to={`/artists/${id}`}>
